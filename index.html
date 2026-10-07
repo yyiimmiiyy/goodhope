@@ -25,7 +25,11 @@
   .card { background:var(--panel); border-radius:10px; padding:24px; }
   .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
   .card p { margin:0; color:var(--muted); font-size:.98rem; }
-  .card a { color:var(--accent); white-space:nowrap; }
+  .intro { color:var(--muted); max-width:40em; margin:-12px 0 26px; }
+  a.tool { display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit; border:1px solid transparent; }
+  a.tool:hover, a.tool:focus-visible { border-color:var(--accent); outline:none; }
+  a.tool h3 { margin:0; }
+  a.tool .more { margin-top:auto; color:var(--accent); font-weight:600; font-size:.92rem; }
   .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
   .principles strong { display:block; font-weight:600; }
   .principles span { color:var(--muted); }
@@ -45,7 +49,31 @@
 
   <section>
     <div class="wrap">
-      <h2>What we work on</h2>
+      <h2>Tools powered by Claude</h2>
+      <p class="intro">Small, free, open-source tools for software teams. Each one runs on your own computer and uses Claude to do the thinking.</p>
+      <div class="grid">
+        <a class="card tool" href="/hindsight/">
+          <h3>Hindsight</h3>
+          <p>Reviews pull requests and learns from your team's past mistakes, so the same bug is caught the next time.</p>
+          <span class="more">About Hindsight</span>
+        </a>
+        <a class="card tool" href="/blindspot/">
+          <h3>Blindspot</h3>
+          <p>Finds the risky code in a pull request that no test covers, and lists the test cases to write.</p>
+          <span class="more">About Blindspot</span>
+        </a>
+        <a class="card tool" href="/shipnotes/">
+          <h3>Shipnotes</h3>
+          <p>Writes release notes from the pull requests and commits that went into a release.</p>
+          <span class="more">About Shipnotes</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What else we work on</h2>
       <div class="grid">
         <div class="card">
           <h3>On-device AI companions</h3>
@@ -58,10 +86,6 @@
         <div class="card">
           <h3>Applied machine learning</h3>
           <p>Custom-trained image classifiers and retrieval pipelines that draw on public environmental and reference data to ground what our apps say.</p>
-        </div>
-        <div class="card">
-          <h3>Tools powered by Claude</h3>
-          <p>Small, free tools built on Claude. <a href="/hindsight/">Hindsight</a> reviews pull requests and learns from a team's past mistakes. <a href="/shipnotes/">Shipnotes</a> writes release notes from a project's real history.</p>
         </div>
       </div>
     </div>

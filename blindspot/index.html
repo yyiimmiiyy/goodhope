@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blindspot | Goodhope Technologies</title>
+<meta name="description" content="Blindspot is a free Windows app that uses Claude to find the risky code in a pull request that no test covers.">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --bg:#f7f5f0; --panel:#efece4; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131816; --panel:#1a211e; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 28px 0; }
+  .brand { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.1rem; letter-spacing: .01em; }
+  .hero { padding: 56px 24px 72px; }
+  .mark { width:44px; height:4px; background:var(--accent); margin-bottom:28px; }
+  h1 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height:1.08; letter-spacing:-.01em; margin:0 0 22px; text-wrap: balance; }
+  .lede { font-size:1.15rem; color:var(--muted); max-width: 36em; margin:0; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 28px; font-weight:600; }
+  section { padding: 56px 0; border-top:1px solid var(--rule); }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .card { background:var(--panel); border-radius:10px; padding:24px; }
+  .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
+  .card p { margin:0; color:var(--muted); font-size:.98rem; }
+  .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
+  .principles strong { display:block; font-weight:600; }
+  .principles span { color:var(--muted); }
+  footer { border-top:1px solid var(--rule); padding:24px 0 40px; font-size:.85rem; color:var(--muted); }
+  footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+  .back { color: var(--muted); text-decoration: none; font-size: .9rem; }
+  .back:hover, a.plain:hover { text-decoration: underline; }
+  .status { display:inline-block; font-size:.8rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:2px 12px; margin-bottom:22px; }
+  figure { margin: 0 0 8px; }
+  figure img { display:block; width:100%; height:auto; border:1px solid var(--rule); border-radius:10px; }
+  figcaption { font-size:.85rem; color:var(--muted); margin-top:10px; }
+  .steps { counter-reset: s; list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width:42em; }
+  .steps li { counter-increment: s; padding-left:44px; position:relative; }
+  .steps li::before { content: counter(s); position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%; background:var(--accent); color:var(--bg); font-weight:700; display:grid; place-items:center; font-size:.9rem; }
+  .steps strong { display:block; }
+  .steps span { color:var(--muted); }
+  a.plain { color: var(--accent); }
+  a.dl { display:inline-block; background:var(--accent); color:var(--bg); text-decoration:none; font-weight:600; padding:10px 18px; border-radius:8px; }
+  a.dl:hover { filter:brightness(1.1); }
+  .note { font-size:.9rem; color:var(--muted); max-width:36em; margin:18px 0 0; }
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="back" href="/">&larr; Goodhope Technologies</a></div></header>
+
+<main>
+  <div class="wrap hero">
+    <span class="status">Early release &middot; free and open source</span>
+    <h1>Blindspot</h1>
+    <p class="lede">Finds the risky code in a pull request that no test covers. Claude reads the change and its tests together and tells you exactly which cases are missing.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <figure>
+        <img src="gaps.png" width="1180" height="800" alt="The Blindspot window showing a pull request marked partly tested, with two gaps: a high-risk one about a refund larger than the amount paid and a medium-risk one about the payment provider failing part-way, each with test cases to write and a suggested test file.">
+        <figcaption>Blindspot listing the untested logic in a pull request. The data shown is an example.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Pick a pull request</strong><span>Choose a GitHub repository and one of its pull requests.</span></li>
+        <li><strong>Claude reads the change and its tests</strong><span>Blindspot separates source files from test files, and Claude works out which new behaviour the tests exercise and which they miss.</span></li>
+        <li><strong>See what could break unnoticed</strong><span>Each gap is rated by risk and comes with concrete test cases: the situation to set up and the result to check.</span></li>
+        <li><strong>Take the checklist with you</strong><span>Copy the gaps as a checklist or post them as a comment on the pull request. Nothing is posted unless you choose to.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How it is built</h2>
+      <ul class="principles">
+        <li><strong>Powered by Claude</strong><span>The analysis is done by Anthropic's Claude models, using your own API key.</span></li>
+        <li><strong>Honest about what it sees</strong><span>Blindspot reads only the lines a pull request changes and does not run your tests, so it tells you to check each gap against tests it could not see.</span></li>
+        <li><strong>No server of ours</strong><span>Your keys stay on your computer. The app talks only to GitHub and to Anthropic.</span></li>
+        <li><strong>Free</strong><span>Blindspot is free to use and open source under the MIT licence. You pay Anthropic only for the runs you make.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Availability</h2>
+      <p class="lede">Version 0.1.0 is an early release for Windows 10 and later, 64-bit. Expect rough edges, and please report what you find.</p>
+      <p style="margin-top:22px"><a class="dl" href="https://github.com/yyiimmiiyy/blindspot/releases/latest">Download the Windows installer</a> &nbsp; <a class="plain" href="https://github.com/yyiimmiiyy/blindspot">Source code on GitHub</a></p>
+      <p class="note">The installer is not code-signed yet, so Windows will warn that the publisher is unknown. You will need your own Anthropic API key and a GitHub access token.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Goodhope Technologies LLC</span>
+    <span>goodhopetechnologies.com</span>
+  </div>
+</footer>
+</body>
+</html>
