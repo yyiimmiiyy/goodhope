@@ -22,7 +22,7 @@
   --ui:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html,body{background:var(--night);color:var(--sand)}
+html,body{background:var(--night);color:var(--sand);overflow-x:clip}
 body{font-family:var(--ui);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:0 72px;overflow-x:hidden}
 .wrap{max-width:1080px;margin:0 auto}
 h1,h2,h3{margin:0;text-wrap:balance}
@@ -37,9 +37,8 @@ p{margin:0}
     linear-gradient(180deg,#1A1424 0%, var(--night) 100%)}
 .hero > div{min-width:0}
 .kicker{font-family:var(--ui);text-transform:uppercase;letter-spacing:.24em;font-size:12px;color:var(--ember);font-weight:700}
-h1{font-family:var(--display);font-size:clamp(44px,8vw,86px);line-height:.95;letter-spacing:.01em;margin-top:14px;
+h1{font-family:var(--display);font-size:clamp(30px,6.4vw,70px);white-space:nowrap;line-height:.95;letter-spacing:.01em;margin-top:14px;
   background:linear-gradient(180deg,#FFF3DA 0%,#E9C98A 70%,#C99252 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-h1 .ai{font-family:var(--head);font-weight:700;letter-spacing:.04em}
 .tag{font-family:var(--body);font-style:italic;font-size:clamp(20px,2.6vw,27px);color:var(--sand);margin-top:16px;max-width:32ch}
 .lede{font-family:var(--body);font-size:18px;color:var(--muted);margin-top:18px;max-width:52ch}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
@@ -102,6 +101,9 @@ h2{font-family:var(--head);font-weight:700;font-size:clamp(28px,4vw,40px);margin
 .composer .box{border-radius:12px;background:var(--dusk2);padding:8px 10px;font-size:13px;color:var(--faint)}
 .composer .send{width:34px;height:34px;border-radius:50%;background:var(--rust);display:grid;place-items:center;color:var(--ink);font-weight:700}
 .note{font-size:12px;color:var(--faint);margin:2px 6px 0;font-style:italic}
+.shot{margin:0;min-width:0}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.shot figcaption{font-size:12.5px;color:var(--faint);font-style:italic;margin-top:10px;text-align:center}
 .points{display:grid;gap:22px;min-width:0}
 .point h3{font-family:var(--head);font-size:19px;color:var(--gold);letter-spacing:.03em}
 .point p{font-family:var(--body);font-size:17px;color:var(--muted);margin-top:6px}
@@ -172,7 +174,7 @@ footer p{font-size:14px;color:var(--faint);max-width:70ch}
   .hero{grid-template-columns:1fr;padding-block:40px 32px}
   .die{width:min(70%,260px)}
   .turn{grid-template-columns:minmax(0,1fr)}
-  .phone{max-width:380px}
+  .shot{max-width:380px}
   .grid,.boards{grid-template-columns:1fr 1fr}
   .living{grid-template-columns:1fr}
   .ladder{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -195,7 +197,7 @@ footer p{font-size:14px;color:var(--faint);max-width:70ch}
 <header class="hero">
   <div>
     <div class="kicker">Now in development · Android first, iPhone later</div>
-    <h1>QuestHold <span class="ai">AI</span></h1>
+    <h1>QuestHold AI</h1>
     <p class="tag">A storytelling game with an AI Game Master on your phone. Imagine any world. Play it for years.</p>
     <p class="lede">Give your campaign a title and tell the Game Master what you want. QuestHold builds a world from your words, with its own places, people, factions, dangers and vocabulary, then tells the story with you, turn by turn, like a great tabletop Game Master. No two campaigns are ever the same.</p>
     <div class="badges">
@@ -262,21 +264,10 @@ footer p{font-size:14px;color:var(--faint);max-width:70ch}
   <div class="eyebrow">A Game Master that plays fair</div>
   <h2>The AI tells the story. Your dice decide what happens.</h2>
   <div class="turn">
-    <div class="phone" role="img" aria-label="A turn in Dust Hollow as shown in the app: the Game Master's telling, Kel Dray's reply, the player's move, and a d20 waiting to be swiped">
-      <div class="bar"><span>DUST HOLLOW</span><span>⋮</span></div>
-      <div class="stat"><span>Jace · Level 1 · the cantina</span><span>Vigor 12/12 · <span style="color:var(--gold)">40 Credits</span></span></div>
-      <div class="msg me"><div class="bub"><div class="who">Jace</div><p>I glare at Kel and demand the deed.</p></div><div class="av hero">J</div></div>
-      <div class="msg"><div class="av">GM</div><div class="bub"><p>You glare hard at Kel Dray, trying to project the authority you feel about this stolen water-rights deed. He just tilts his head, letting out a low, dry chuckle that sounds like gravel shifting in a barrel.</p></div></div>
-      <div class="rollcard">
-        <div class="t">ROLL YOUR D20</div>
-        <div class="why">Make Kel Dray hand over the deed</div>
-        <div class="need">Roll 12 or higher · chancy</div>
-        <svg viewBox="0 0 60 60" aria-hidden="true"><polygon points="30,3 55,17 55,43 30,57 5,43 5,17" fill="#2A2236" stroke="#E3C26E" stroke-width="1.6"/><polyline points="5,17 30,23 55,17" fill="none" stroke="#E3C26E" stroke-opacity=".5"/><polyline points="30,3 30,23" fill="none" stroke="#E3C26E" stroke-opacity=".5"/><circle cx="30" cy="35" r="10" fill="#1E1828" stroke="#E3C26E" stroke-width="1"/><text x="30" y="40" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="700" font-size="13" fill="#F1E3C8">?</text></svg>
-        <div class="hint">Swipe the die, or enter what your own die shows</div>
-      </div>
-      <div class="composer"><span class="idea"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg><i>3</i></span><span class="box">What do you do?</span><span class="send">↑</span></div>
-      <p class="note">The Game Master's line is a real turn, told by the AI on a phone, offline.</p>
-    </div>
+    <figure class="shot">
+      <img src="turn.png" width="720" height="1760" alt="A QuestHold AI screen in the campaign Dust Hollow: the Game Master's telling of a shot at a thug named Wilton, and below it a panel titled Roll your d20, Shoot Wilton, with the die showing 8 while the Game Master reads the roll.">
+      <figcaption>A turn in the app, running on an Android phone.</figcaption>
+    </figure>
     <div class="points">
       <div class="point"><h3>You roll every die</h3><p>Swipe the d20 right in the story and watch it tumble, roll your own die and enter the number, or roll a Pixels smart die. The game never rolls for you, and every result is saved before the story is told.</p></div>
       <div class="point"><h3>Rules run by the game, not the AI</h3><p>Every hit, price, door and odds is decided by the game's own rules. The AI can't fudge a roll or forget your gold, and what you see on screen is never taken back.</p></div>
