@@ -26,6 +26,8 @@
   .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
   .card p { margin:0; color:var(--muted); font-size:.98rem; }
   .intro { color:var(--muted); max-width:40em; margin:-12px 0 26px; }
+  .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 620px) { .grid.two { grid-template-columns: 1fr; } }
   a.tool { display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit; border:1px solid transparent; }
   a.tool:hover, a.tool:focus-visible { border-color:var(--accent); outline:none; }
   a.tool h3 { margin:0; }
@@ -50,8 +52,8 @@
   <section>
     <div class="wrap">
       <h2>Tools powered by Claude</h2>
-      <p class="intro">Small, free, open-source tools for software teams. Each one runs on your own computer and uses Claude to do the thinking.</p>
-      <div class="grid">
+      <p class="intro">Small, free, open-source tools for software teams and app makers. Each one runs on your own computer and uses Claude to do the thinking.</p>
+      <div class="grid two">
         <a class="card tool" href="/hindsight/">
           <h3>Hindsight</h3>
           <p>Reviews pull requests and learns from your team's past mistakes, so the same bug is caught the next time.</p>
@@ -66,6 +68,11 @@
           <h3>Shipnotes</h3>
           <p>Writes release notes from the pull requests and commits that went into a release.</p>
           <span class="more">About Shipnotes</span>
+        </a>
+        <a class="card tool" href="/earshot/">
+          <h3>Earshot</h3>
+          <p>Sorts app store reviews into themes and drafts a reply to each one for you to edit and post.</p>
+          <span class="more">About Earshot</span>
         </a>
       </div>
     </div>
