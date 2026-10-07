@@ -44,6 +44,9 @@
   .steps strong { display:block; }
   .steps span { color:var(--muted); }
   a.plain { color: var(--accent); }
+  a.dl { display:inline-block; background:var(--accent); color:var(--bg); text-decoration:none; font-weight:600; padding:10px 18px; border-radius:8px; }
+  a.dl:hover { filter:brightness(1.1); }
+  .note { font-size:.9rem; color:var(--muted); max-width:36em; margin:18px 0 0; }
 </style>
 </head>
 <body>
@@ -51,7 +54,7 @@
 
 <main>
   <div class="wrap hero">
-    <span class="status">In development &middot; free and open source</span>
+    <span class="status">Early release &middot; free and open source</span>
     <h1>Hindsight</h1>
     <p class="lede">A pull request reviewer for Windows, powered by Claude, that learns from your team's past mistakes. Every bug that slips through becomes a rule it checks on every review that follows.</p>
   </div>
@@ -92,7 +95,9 @@
   <section>
     <div class="wrap">
       <h2>Availability</h2>
-      <p class="lede">The first version is built and in testing. The Windows installer and the source code will be published here when it is released.</p>
+      <p class="lede">Version 0.1.0 is an early release for Windows 10 and later, 64-bit. Expect rough edges, and please report what you find.</p>
+      <p style="margin-top:22px"><a class="dl" href="https://github.com/yyiimmiiyy/hindsight/releases/latest">Download the Windows installer</a> &nbsp; <a class="plain" href="https://github.com/yyiimmiiyy/hindsight">Source code on GitHub</a></p>
+      <p class="note">The installer is not code-signed yet, so Windows will warn that the publisher is unknown. You will need your own Anthropic API key and a GitHub access token.</p>
     </div>
   </section>
 </main>
