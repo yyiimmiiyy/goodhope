@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Good Hope Technologies</title>
+<meta name="description" content="Good Hope Technologies">
+<style>
+  :root { --bg:#f7f5f0; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131816; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  main { flex: 1; display: flex; align-items: center; padding: 48px 24px; }
+  .wrap { width: 100%; max-width: 720px; margin: 0 auto; }
+  .mark { width: 44px; height: 4px; background: var(--accent); margin-bottom: 28px; }
+  h1 { font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1.05; margin: 0 0 20px; font-weight: 400; letter-spacing: -0.01em; }
+  p { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 1.1rem; line-height: 1.6; color: var(--muted); margin: 0; max-width: 34em; }
+  footer { border-top: 1px solid var(--rule); padding: 20px 24px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.85rem; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<main>
+  <div class="wrap">
+    <div class="mark"></div>
+    <h1>Good Hope Technologies</h1>
+    <p>Our full site is on the way.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Good Hope Technologies</span>
+    <span>goodhopetechnologies.com</span>
+  </div>
+</footer>
+</body>
+</html>
