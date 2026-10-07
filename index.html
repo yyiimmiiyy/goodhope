@@ -4,39 +4,83 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Good Hope Technologies</title>
-<meta name="description" content="Good Hope Technologies">
+<meta name="description" content="Good Hope Technologies is an independent software studio building private, on-device AI apps, mobile games, and developer tools.">
 <style>
-  :root { --bg:#f7f5f0; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
+  :root { --bg:#f7f5f0; --panel:#efece4; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#131816; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
+    :root { --bg:#131816; --panel:#1a211e; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
-    display: flex; flex-direction: column; min-height: 100vh;
-  }
-  main { flex: 1; display: flex; align-items: center; padding: 48px 24px; }
-  .wrap { width: 100%; max-width: 720px; margin: 0 auto; }
-  .mark { width: 44px; height: 4px; background: var(--accent); margin-bottom: 28px; }
-  h1 { font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1.05; margin: 0 0 20px; font-weight: 400; letter-spacing: -0.01em; }
-  p { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 1.1rem; line-height: 1.6; color: var(--muted); margin: 0; max-width: 34em; }
-  footer { border-top: 1px solid var(--rule); padding: 20px 24px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.85rem; color: var(--muted); }
-  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 28px 0; }
+  .brand { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.1rem; letter-spacing: .01em; }
+  .hero { padding: 56px 0 72px; }
+  .mark { width:44px; height:4px; background:var(--accent); margin-bottom:28px; }
+  h1 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height:1.08; letter-spacing:-.01em; margin:0 0 22px; text-wrap: balance; }
+  .lede { font-size:1.15rem; color:var(--muted); max-width: 36em; margin:0; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 28px; font-weight:600; }
+  section { padding: 56px 0; border-top:1px solid var(--rule); }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .card { background:var(--panel); border-radius:10px; padding:24px; }
+  .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
+  .card p { margin:0; color:var(--muted); font-size:.98rem; }
+  .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
+  .principles strong { display:block; font-weight:600; }
+  .principles span { color:var(--muted); }
+  footer { border-top:1px solid var(--rule); padding:24px 0 40px; font-size:.85rem; color:var(--muted); }
+  footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 </style>
 </head>
 <body>
+<header><div class="wrap"><div class="brand">Good Hope Technologies</div></div></header>
+
 <main>
-  <div class="wrap">
+  <div class="wrap hero">
     <div class="mark"></div>
-    <h1>Good Hope Technologies</h1>
-    <p>Our full site is on the way.</p>
+    <h1>Software that works where you are, and keeps your data with you.</h1>
+    <p class="lede">We are an independent software studio. We build AI apps that run on the device in your hand, mobile games, and the tools that make both possible.</p>
   </div>
+
+  <section>
+    <div class="wrap">
+      <h2>What we work on</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>On-device AI companions</h3>
+          <p>Mobile apps that pair a local language model with real-world data, built for outdoor and hobby pursuits where a signal is not guaranteed.</p>
+        </div>
+        <div class="card">
+          <h3>Mobile games</h3>
+          <p>A portfolio of casual games across several genres, built on a shared engine so that each new title starts from proven foundations.</p>
+        </div>
+        <div class="card">
+          <h3>Applied machine learning</h3>
+          <p>Custom-trained image classifiers and retrieval pipelines that draw on public environmental and reference data to ground what our apps say.</p>
+        </div>
+        <div class="card">
+          <h3>Developer tools</h3>
+          <p>Offline-first AI tooling for writing and reviewing code, designed for teams that need to keep their source on their own hardware.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How we build</h2>
+      <ul class="principles">
+        <li><strong>Private by default</strong><span>Wherever we can, the model and your data stay on your device rather than on our servers.</span></li>
+        <li><strong>Useful offline</strong><span>Our apps are designed to keep working when the network does not.</span></li>
+        <li><strong>Small team, shared foundations</strong><span>We invest in common engines and pipelines so a small studio can ship and maintain many products.</span></li>
+      </ul>
+    </div>
+  </section>
 </main>
+
 <footer>
   <div class="wrap">
-    <span>&copy; 2026 Good Hope Technologies</span>
+    <span>&copy; 2026 Goodhope Technologies LLC</span>
     <span>goodhopetechnologies.com</span>
   </div>
 </footer>
