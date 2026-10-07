@@ -15,7 +15,7 @@
   .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
   header { padding: 28px 0; }
   .brand { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.1rem; letter-spacing: .01em; }
-  .hero { padding: 56px 0 72px; }
+  .hero { padding: 56px 24px 72px; }
   .mark { width:44px; height:4px; background:var(--accent); margin-bottom:28px; }
   h1 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height:1.08; letter-spacing:-.01em; margin:0 0 22px; text-wrap: balance; }
   .lede { font-size:1.15rem; color:var(--muted); max-width: 36em; margin:0; }
@@ -25,6 +25,7 @@
   .card { background:var(--panel); border-radius:10px; padding:24px; }
   .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
   .card p { margin:0; color:var(--muted); font-size:.98rem; }
+  .card a { color:var(--accent); white-space:nowrap; }
   .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
   .principles strong { display:block; font-weight:600; }
   .principles span { color:var(--muted); }
@@ -39,7 +40,7 @@
   <div class="wrap hero">
     <div class="mark"></div>
     <h1>Software that works where you are, and keeps your data with you.</h1>
-    <p class="lede">We are an independent software studio. We build AI apps that run on the device in your hand, mobile games, and the tools that make both possible.</p>
+    <p class="lede">We are an independent software studio. We build AI apps that run on the device in your hand, mobile games, and developer tools powered by Claude.</p>
   </div>
 
   <section>
@@ -60,7 +61,7 @@
         </div>
         <div class="card">
           <h3>Developer tools</h3>
-          <p>A self-learning development platform built on Claude, with failover to other models. Teams of AI specialists review code, test and automate delivery work, and the system learns from past errors to prevent repeats.</p>
+          <p>Hindsight, a free pull request reviewer powered by Claude that learns from a team's past mistakes and checks every later change against them. <a href="/hindsight/">About Hindsight</a></p>
         </div>
       </div>
     </div>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hindsight | Goodhope Technologies</title>
+<meta name="description" content="Hindsight is a free pull request reviewer for Windows, powered by Claude, that learns from your team's past mistakes.">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --bg:#f7f5f0; --panel:#efece4; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131816; --panel:#1a211e; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 28px 0; }
+  .brand { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.1rem; letter-spacing: .01em; }
+  .hero { padding: 56px 24px 72px; }
+  .mark { width:44px; height:4px; background:var(--accent); margin-bottom:28px; }
+  h1 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height:1.08; letter-spacing:-.01em; margin:0 0 22px; text-wrap: balance; }
+  .lede { font-size:1.15rem; color:var(--muted); max-width: 36em; margin:0; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 28px; font-weight:600; }
+  section { padding: 56px 0; border-top:1px solid var(--rule); }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .card { background:var(--panel); border-radius:10px; padding:24px; }
+  .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
+  .card p { margin:0; color:var(--muted); font-size:.98rem; }
+  .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
+  .principles strong { display:block; font-weight:600; }
+  .principles span { color:var(--muted); }
+  footer { border-top:1px solid var(--rule); padding:24px 0 40px; font-size:.85rem; color:var(--muted); }
+  footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+  .back { color: var(--muted); text-decoration: none; font-size: .9rem; }
+  .back:hover, a.plain:hover { text-decoration: underline; }
+  .status { display:inline-block; font-size:.8rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:2px 12px; margin-bottom:22px; }
+  figure { margin: 0 0 8px; }
+  figure img { display:block; width:100%; height:auto; border:1px solid var(--rule); border-radius:10px; }
+  figcaption { font-size:.85rem; color:var(--muted); margin-top:10px; }
+  .steps { counter-reset: s; list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width:42em; }
+  .steps li { counter-increment: s; padding-left:44px; position:relative; }
+  .steps li::before { content: counter(s); position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%; background:var(--accent); color:var(--bg); font-weight:700; display:grid; place-items:center; font-size:.9rem; }
+  .steps strong { display:block; }
+  .steps span { color:var(--muted); }
+  a.plain { color: var(--accent); }
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="back" href="/">&larr; Goodhope Technologies</a></div></header>
+
+<main>
+  <div class="wrap hero">
+    <span class="status">In development &middot; free and open source</span>
+    <h1>Hindsight</h1>
+    <p class="lede">A pull request reviewer for Windows, powered by Claude, that learns from your team's past mistakes. Every bug that slips through becomes a rule it checks on every review that follows.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <figure>
+        <img src="review.png" width="1180" height="800" alt="The Hindsight window showing a review of a pull request: a critical finding about a retry that re-sends invoices, labelled with the saved lesson it breaks, and a minor finding below it.">
+        <figcaption>Hindsight reviewing a pull request. The data shown is an example.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Review a pull request</strong><span>Choose a GitHub repository and a pull request. Claude reads the changes and reports concrete defects, each with the file, the line and a suggested fix.</span></li>
+        <li><strong>Teach it when something slips through</strong><span>Describe the bug or point to the pull request involved. Claude works out the root cause and proposes a prevention rule, which you edit and save as a lesson.</span></li>
+        <li><strong>It remembers</strong><span>Saved lessons are applied to every later review of that repository, and findings that break one are labelled with it.</span></li>
+        <li><strong>Share lessons with your team</strong><span>Export them as a file and commit it to the repository. Everyone reviewing with Hindsight picks them up.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How it is built</h2>
+      <ul class="principles">
+        <li><strong>Powered by Claude</strong><span>Reviews and root-cause analysis are done by Anthropic's Claude models, using your own API key.</span></li>
+        <li><strong>You stay in control</strong><span>You read every review before anything is posted. Hindsight comments on a pull request only when you tell it to, and never approves or blocks one for you.</span></li>
+        <li><strong>No server of ours</strong><span>Your keys and lessons stay on your computer. The app talks only to GitHub and to Anthropic.</span></li>
+        <li><strong>Free</strong><span>Hindsight is free to use and open source under the MIT licence. You pay Anthropic only for the reviews you run.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Availability</h2>
+      <p class="lede">The first version is built and in testing. The Windows installer and the source code will be published here when it is released.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Goodhope Technologies LLC</span>
+    <span>goodhopetechnologies.com</span>
+  </div>
+</footer>
+</body>
+</html>
