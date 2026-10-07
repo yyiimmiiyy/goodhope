@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>QuestHold AI</title>
+<meta name="description" content="QuestHold AI is a storytelling game with an AI Game Master on your phone, in development by Goodhope Technologies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;0,500;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>body{margin:0}img{max-width:100%}</style>
+<style>
+/* Layout: one candlelit column; a hero with the d20, then the story, the table, the nine scenes, the road to Legend, Free and Pro. */
+:root{
+  color-scheme:dark;
+  --night:#14101C; --dusk:#1E1828; --dusk2:#2A2236; --line:#3D3249;
+  --sand:#F1E3C8; --muted:#BFAE96; --faint:#8C7C6E;
+  --rust:#E0784A; --ember:#F0A24E; --gold:#E3C26E; --sky:#8FB7E8; --ok:#9CC487; --bone:#FFE6A6; --ink:#0E0B13;
+  --display:"Cinzel Decorative","Cinzel",Georgia,serif;
+  --head:"Cinzel",Georgia,serif;
+  --body:"Alegreya",Georgia,serif;
+  --ui:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{background:var(--night);color:var(--sand)}
+body{font-family:var(--ui);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:0 72px;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+
+/* ---------- hero ---------- */
+.hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-block:64px 56px}
+.hero::before{content:"";position:absolute;inset:-40px -50vw 0;z-index:-1;
+  background:
+    radial-gradient(60% 70% at 78% 40%, rgba(224,120,74,.28), transparent 70%),
+    radial-gradient(50% 60% at 15% 10%, rgba(143,183,232,.12), transparent 70%),
+    linear-gradient(180deg,#1A1424 0%, var(--night) 100%)}
+.hero > div{min-width:0}
+.kicker{font-family:var(--ui);text-transform:uppercase;letter-spacing:.24em;font-size:12px;color:var(--ember);font-weight:700}
+h1{font-family:var(--display);font-size:clamp(44px,8vw,86px);line-height:.95;letter-spacing:.01em;margin-top:14px;
+  background:linear-gradient(180deg,#FFF3DA 0%,#E9C98A 70%,#C99252 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-family:var(--body);font-style:italic;font-size:clamp(20px,2.6vw,27px);color:var(--sand);margin-top:16px;max-width:32ch}
+.lede{font-family:var(--body);font-size:18px;color:var(--muted);margin-top:18px;max-width:52ch}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.badge{border:1px solid var(--line);background:rgba(42,34,54,.7);border-radius:999px;padding:6px 12px;font-size:13.5px;color:var(--sand)}
+.badge b{color:var(--gold);font-weight:700}
+
+/* d20 */
+.die-wrap{display:grid;place-items:center}
+.die{width:min(100%,360px);aspect-ratio:1;max-width:100%;filter:drop-shadow(0 30px 60px rgba(224,120,74,.35))}
+@media (prefers-reduced-motion:no-preference){
+  .die{animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+}
+
+/* ---------- sections ---------- */
+section{padding-block:56px;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--ui);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--rust);font-weight:700}
+h2{font-family:var(--head);font-weight:700;font-size:clamp(28px,4vw,40px);margin-top:10px;color:var(--sand);letter-spacing:.02em}
+.sub{font-family:var(--body);font-size:18.5px;color:var(--muted);margin-top:12px;max-width:62ch}
+.sub b{color:var(--gold);font-weight:500}
+
+/* worlds */
+.worlds{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.world{font-family:var(--body);font-style:italic;font-size:17px;padding:9px 16px;border-radius:12px;background:var(--dusk);border:1px solid var(--line)}
+.world:nth-child(3n+1){border-color:rgba(224,120,74,.5)}
+.world:nth-child(4n+2){border-color:rgba(143,183,232,.45)}
+.world:nth-child(5n+3){border-color:rgba(227,194,110,.5)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.step{border-top:2px solid var(--gold);padding-top:12px}
+.step b{display:block;font-family:var(--head);font-size:17px;color:var(--sand);letter-spacing:.02em}
+.step span{font-family:var(--body);font-size:16px;color:var(--muted)}
+
+/* the turn: phone + points */
+.turn{display:grid;grid-template-columns:minmax(0,350px) minmax(0,1fr);gap:44px;align-items:center;margin-top:30px}
+.phone{background:var(--ink);border:1px solid var(--line);border-radius:34px;padding:16px 14px 18px;box-shadow:0 30px 80px rgba(0,0,0,.5);display:grid;gap:10px}
+.phone .bar{display:flex;justify-content:space-between;align-items:center;font-family:var(--head);font-size:15px;letter-spacing:.06em;padding:4px 6px 10px;border-bottom:1px solid var(--line)}
+.phone .bar span:last-child{font-family:var(--ui);color:var(--muted);letter-spacing:0;font-size:18px}
+.phone .stat{font-family:var(--ui);font-size:12px;color:var(--muted);padding:0 6px;display:flex;justify-content:space-between;gap:8px;border-bottom:3px solid var(--ok);padding-bottom:6px}
+.msg{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start}
+.msg.me{grid-template-columns:minmax(0,1fr) 30px}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--head);font-weight:700;font-size:13px;border:1.5px solid var(--gold);color:var(--gold);background:var(--dusk)}
+.av.foe{border-color:var(--rust);color:var(--rust)}
+.av.hero{border-color:var(--ember);color:var(--ember)}
+.bub{border:1px solid var(--line);border-radius:14px;padding:8px 11px;background:var(--dusk);min-width:0}
+.bub .who{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:3px}
+.bub.foe .who{color:var(--rust)}
+.bub p{font-family:var(--body);font-size:15px;line-height:1.5;color:var(--sand)}
+.me .bub{background:var(--dusk2);border-color:rgba(240,162,78,.45)}
+.me .bub .who{color:var(--ember);text-align:right}
+.rollcard{border:1.4px solid rgba(227,194,110,.6);border-radius:16px;padding:10px;background:var(--dusk);display:grid;gap:6px;justify-items:center;text-align:center}
+.rollcard .t{font-family:var(--head);font-size:13px;letter-spacing:.08em;color:var(--gold)}
+.rollcard .why{font-family:var(--body);font-size:13.5px;color:var(--sand)}
+.rollcard .need{font-family:var(--ui);font-size:12px;color:var(--muted)}
+.rollcard svg{width:56px;height:56px}
+.rollcard .hint{font-family:var(--ui);font-size:11.5px;color:var(--faint)}
+.composer{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;gap:8px;align-items:center;margin-top:2px}
+.composer .idea{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;position:relative}
+.composer .idea svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.composer .idea i{position:absolute;top:-5px;right:-5px;font-style:normal;font-size:10px;font-weight:700;background:var(--gold);color:var(--ink);border-radius:999px;padding:0 5px}
+.composer .box{border-radius:12px;background:var(--dusk2);padding:8px 10px;font-size:13px;color:var(--faint)}
+.composer .send{width:34px;height:34px;border-radius:50%;background:var(--rust);display:grid;place-items:center;color:var(--ink);font-weight:700}
+.note{font-size:12px;color:var(--faint);margin:2px 6px 0;font-style:italic}
+.points{display:grid;gap:22px;min-width:0}
+.point h3{font-family:var(--head);font-size:19px;color:var(--gold);letter-spacing:.03em}
+.point p{font-family:var(--body);font-size:17px;color:var(--muted);margin-top:6px}
+
+/* living story */
+.living{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;margin-top:30px}
+.living .point{border-left:2px solid var(--line);padding-left:16px}
+
+/* scene boards */
+.boards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px}
+.bd{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--dusk);display:grid;gap:4px}
+.bd b{font-family:var(--head);font-size:17px;letter-spacing:.06em;color:var(--sand)}
+.bd span{font-family:var(--body);font-size:15.5px;color:var(--muted)}
+.bd em{font-family:var(--ui);font-style:normal;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+
+/* feature grid */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:30px}
+.card{background:linear-gradient(180deg,var(--dusk) 0%,#191422 100%);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:10px;align-content:start}
+.card svg{width:34px;height:34px;stroke:var(--ember);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-family:var(--head);font-size:18px;color:var(--sand);letter-spacing:.02em}
+.card p{font-family:var(--body);font-size:16px;color:var(--muted)}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:34px;position:relative}
+.rung{padding:18px 14px 16px;border-left:1px solid var(--line);position:relative}
+.rung:first-child{border-left:0}
+.rung .lv{font-family:var(--head);font-weight:700;font-size:22px;color:var(--gold)}
+.rung .nm{font-family:var(--head);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);margin-top:4px}
+.rung p{font-family:var(--body);font-size:14.5px;color:var(--muted);margin-top:8px}
+.rung .fill{position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--sky),var(--ember))}
+.rung.legend{background:radial-gradient(80% 90% at 50% 0%, rgba(227,194,110,.22), transparent 80%)}
+.rung.legend .lv{color:var(--bone)}
+.rung.legend .fill{background:linear-gradient(90deg,var(--ember),var(--bone))}
+
+/* legend banner */
+.legendband{margin-top:34px;border:1px solid rgba(227,194,110,.45);border-radius:18px;padding:28px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;
+  background:radial-gradient(70% 120% at 0% 50%, rgba(227,194,110,.16), transparent 70%), var(--dusk)}
+.legendband svg{width:84px;height:84px;stroke:var(--gold);fill:none;stroke-width:1.4}
+.legendband h3{font-family:var(--display);font-size:clamp(22px,3vw,30px);color:var(--bone)}
+.legendband p{font-family:var(--body);font-size:17px;color:var(--muted);margin-top:8px}
+
+/* promise */
+.promise{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+.pr{border-top:2px solid var(--rust);padding-top:14px}
+.pr b{display:block;font-family:var(--head);font-size:18px;color:var(--sand)}
+.pr span{font-family:var(--body);font-size:15.5px;color:var(--muted)}
+
+.pro{font-family:var(--ui);font-size:11.5px;letter-spacing:.12em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:1px 8px;vertical-align:middle;white-space:nowrap}
+.tiers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:28px}
+.tier{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--dusk)}
+.tier.prot{border-color:rgba(227,194,110,.55);background:radial-gradient(90% 80% at 100% 0%, rgba(227,194,110,.14), transparent 70%), var(--dusk)}
+.tier h3{font-family:var(--head);font-size:22px;color:var(--sand)}
+.tier .who{font-family:var(--body);font-style:italic;color:var(--muted);margin-top:4px}
+.tier ul{margin:14px 0 0;padding-left:18px;display:grid;gap:6px;font-family:var(--body);font-size:16.5px;color:var(--sand)}
+.tier li::marker{color:var(--rust)}
+.tier.prot li::marker{color:var(--gold)}
+.trialnote{margin-top:16px;font-family:var(--body);font-size:16px;color:var(--muted)}
+.together{margin-top:20px;border:1px dashed var(--line);border-radius:14px;padding:16px 18px;font-family:var(--body);font-size:16.5px;color:var(--muted)}
+.together b{color:var(--sand);font-weight:500}
+table.turns{border-collapse:collapse;margin-top:10px;font-family:var(--ui);font-size:14.5px;font-variant-numeric:tabular-nums}
+table.turns td{padding:4px 18px 4px 0;color:var(--sand)}
+table.turns td:last-child{color:var(--gold);font-weight:700}
+footer{padding-block:40px 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:baseline}
+footer .mark{font-family:var(--display);font-size:22px;color:var(--gold)}
+footer p{font-size:14px;color:var(--faint);max-width:70ch}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;padding-block:40px 32px}
+  .die{width:min(70%,260px)}
+  .turn{grid-template-columns:minmax(0,1fr)}
+  .phone{max-width:380px}
+  .grid,.boards{grid-template-columns:1fr 1fr}
+  .living{grid-template-columns:1fr}
+  .ladder{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rung:nth-child(4){border-left:0}
+  .promise{grid-template-columns:1fr 1fr}
+}
+@media (max-width:700px){.tiers,.steps{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .grid,.promise,.boards{grid-template-columns:1fr}
+  .ladder{grid-template-columns:1fr 1fr}
+  .rung:nth-child(odd){border-left:0}
+  .rung:nth-child(4){border-left:1px solid var(--line)}
+  .legendband{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="kicker">Now in development · Android first, iPhone later</div>
+    <h1>QuestHold AI</h1>
+    <p class="tag">A storytelling game with an AI Game Master on your phone. Imagine any world. Play it for years.</p>
+    <p class="lede">Give your campaign a title and tell the Game Master what you want. QuestHold builds a world from your words, with its own places, people, factions, dangers and vocabulary, then tells the story with you, turn by turn, like a great tabletop Game Master. No two campaigns are ever the same.</p>
+    <div class="badges">
+      <span class="badge"><b>Offline</b> after one download</span>
+      <span class="badge"><b>No account</b>, no subscription</span>
+      <span class="badge"><b>You roll</b> every die</span>
+      <span class="badge"><b>Friends</b> at your table</span>
+      <span class="badge"><b>Level 30</b> and a legendary finale</span>
+    </div>
+  </div>
+  <div class="die-wrap" aria-hidden="true">
+    <svg class="die" viewBox="0 0 200 200">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6B068"/><stop offset="1" stop-color="#B8542E"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD9A0"/><stop offset="1" stop-color="#E0784A"/></linearGradient>
+        <linearGradient id="g3" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C8643A"/><stop offset="1" stop-color="#7A3420"/></linearGradient>
+      </defs>
+      <polygon points="100,8 182,55 182,145 100,192 18,145 18,55" fill="#3A2230"/>
+      <polygon points="100,8 182,55 100,72" fill="url(#g2)"/>
+      <polygon points="100,8 18,55 100,72" fill="#F4C189"/>
+      <polygon points="18,55 100,72 52,138" fill="url(#g1)"/>
+      <polygon points="182,55 100,72 148,138" fill="url(#g3)"/>
+      <polygon points="100,72 52,138 148,138" fill="url(#g1)"/>
+      <polygon points="18,55 18,145 52,138" fill="#9C4528"/>
+      <polygon points="182,55 182,145 148,138" fill="#6B2C1C"/>
+      <polygon points="52,138 18,145 100,192" fill="#8E3E25"/>
+      <polygon points="148,138 182,145 100,192" fill="#5E2618"/>
+      <polygon points="52,138 148,138 100,192" fill="#A84D2C"/>
+      <g fill="none" stroke="#FFE3B8" stroke-opacity=".35" stroke-width="1.2">
+        <polygon points="100,8 182,55 182,145 100,192 18,145 18,55"/>
+        <polyline points="18,55 100,72 182,55"/><polyline points="100,8 100,72"/>
+        <polyline points="52,138 100,72 148,138 52,138"/><polyline points="18,145 52,138 100,192 148,138 182,145"/>
+      </g>
+      <circle cx="100" cy="112" r="24" fill="#5E2618" stroke="#FFE3B8" stroke-opacity=".5" stroke-width="1.2"/>
+      <text x="100" y="124" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="700" font-size="32" fill="#FFF3DA">20</text>
+    </svg>
+  </div>
+</header>
+
+<section>
+  <div class="eyebrow">Any world you can imagine</div>
+  <h2>If you can describe it, you can play it.</h2>
+  <p class="sub">A western on a desert moon. A circus of elephants. A bakery run by kittens. A farm kid who dreams of adventure. QuestHold reads what you wrote for its meaning, keeps your own words, and builds a world that fits: the kinds of challenges it holds, its colors and map, its storyteller's voice, its own words for money, health and danger, and its laws of reality, so a gritty noir never sprouts a spell.</p>
+  <div class="worlds">
+    <span class="world">a space western on a dusty moon</span>
+    <span class="world">an elephant circus on the road</span>
+    <span class="world">kittens running a bakery on the moon</span>
+    <span class="world">a zombie outbreak in a shopping mall</span>
+    <span class="world">a baseball career on Mars</span>
+    <span class="world">a haunted lighthouse mystery</span>
+    <span class="world">a samurai's last winter</span>
+    <span class="world">a heist on a sky-train</span>
+    <span class="world">1920s jazz detectives</span>
+    <span class="world">a dragon's accountant</span>
+  </div>
+  <div class="steps">
+    <div class="step"><b>Two taps to the story</b><span>Write a title or a few paragraphs, or tap <b style="color:var(--gold)">Surprise me</b>. The Game Master shows you the hero it picked for your world. Tap Start playing.</span></div>
+    <div class="step"><b>Or shape every detail</b><span>Customize your hero's past, personality, beliefs, fears, secrets, the people who matter to them and how they talk. Customize the world's tone, danger, magic, technology, factions and size.</span></div>
+    <div class="step"><b>Your first story teaches you</b><span>No tutorial screens. Your first campaign makes sure you meet someone, roll the die, find something, hear of a new place and face an easy challenge, with one short tip at a time.</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">A Game Master that plays fair</div>
+  <h2>The AI tells the story. Your dice decide what happens.</h2>
+  <div class="turn">
+    <div class="phone" role="img" aria-label="A turn in Dust Hollow as shown in the app: the Game Master's telling, Kel Dray's reply, the player's move, and a d20 waiting to be swiped">
+      <div class="bar"><span>DUST HOLLOW</span><span>⋮</span></div>
+      <div class="stat"><span>Jace · Level 1 · the cantina</span><span>Vigor 12/12 · <span style="color:var(--gold)">40 Credits</span></span></div>
+      <div class="msg me"><div class="bub"><div class="who">Jace</div><p>I glare at Kel and demand the deed.</p></div><div class="av hero">J</div></div>
+      <div class="msg"><div class="av">GM</div><div class="bub"><p>You glare hard at Kel Dray, trying to project the authority you feel about this stolen water-rights deed. He just tilts his head, letting out a low, dry chuckle that sounds like gravel shifting in a barrel.</p></div></div>
+      <div class="rollcard">
+        <div class="t">ROLL YOUR D20</div>
+        <div class="why">Make Kel Dray hand over the deed</div>
+        <div class="need">Roll 12 or higher · chancy</div>
+        <svg viewBox="0 0 60 60" aria-hidden="true"><polygon points="30,3 55,17 55,43 30,57 5,43 5,17" fill="#2A2236" stroke="#E3C26E" stroke-width="1.6"/><polyline points="5,17 30,23 55,17" fill="none" stroke="#E3C26E" stroke-opacity=".5"/><polyline points="30,3 30,23" fill="none" stroke="#E3C26E" stroke-opacity=".5"/><circle cx="30" cy="35" r="10" fill="#1E1828" stroke="#E3C26E" stroke-width="1"/><text x="30" y="40" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="700" font-size="13" fill="#F1E3C8">?</text></svg>
+        <div class="hint">Swipe the die, or enter what your own die shows</div>
+      </div>
+      <div class="composer"><span class="idea"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg><i>3</i></span><span class="box">What do you do?</span><span class="send">↑</span></div>
+      <p class="note">The Game Master's line is a real turn, told by the AI on a phone, offline.</p>
+    </div>
+    <div class="points">
+      <div class="point"><h3>You roll every die</h3><p>Swipe the d20 right in the story and watch it tumble, roll your own die and enter the number, or roll a Pixels smart die. The game never rolls for you, and every result is saved before the story is told.</p></div>
+      <div class="point"><h3>Rules run by the game, not the AI</h3><p>Every hit, price, door and odds is decided by the game's own rules. The AI can't fudge a roll or forget your gold, and what you see on screen is never taken back.</p></div>
+      <div class="point"><h3>Faces, names and voices</h3><p>Everyone who speaks shows their face and name, and talks in a voice of their own. Tap a name to see who they are. Out of ideas? The ideas button offers moves that matter, with their odds in plain words.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">A story that lives</div>
+  <h2>A world that moves, even when you don't.</h2>
+  <p class="sub">The story is the game. Quiet moments matter as much as battles: a stranger's memory, a rival's taunt, a town that remembers what you did.</p>
+  <div class="living">
+    <div class="point"><h3>People with their own lives</h3><p>Everyone wants something, fears something and is tied to someone. Many keep a secret, and there are always three ways to uncover it. Talk to people and they answer from what they know, think and remember about you.</p></div>
+    <div class="point"><h3>Factions that act every day</h3><p>Guilds, gangs, courts and rival bakeries pursue their own goals day by day. You see it in the world: a place changes hands, prices rise, a road closes, someone goes missing.</p></div>
+    <div class="point"><h3>Threats you can see coming</h3><p>Dangers grow while you are away, and each step is foreshadowed before it lands, so you always have a chance to act. Ignore them and the world changes for good.</p></div>
+    <div class="point"><h3>Your deeds come back</h3><p>The smuggler you spared returns. People quote what you said. Places carry the marks of what happened there. Every event has a cause, and the Chronicle keeps the record.</p></div>
+    <div class="point"><h3>Paced like a great table</h3><p>Tension builds, peaks and gives way to rest. Every telling ends on something still happening, and a failure always opens a new path instead of a dead end.</p></div>
+    <div class="point"><h3>Never the same campaign twice</h3><p>Each campaign gets its own mix of people, places, quests and twists, drawn to be different from the campaigns you have already played, with tired story clichés kept out.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Nine kinds of scenes</div>
+  <h2>Every conflict is a scene in the story.</h2>
+  <p class="sub">When things come to a head, the scene opens on its own board: the stakes in story terms, two tracks you race against, honest odds before you roll, and every move told as story. Each kind plays differently, and your world picks the ones that fit it.</p>
+  <div class="boards">
+    <div class="bd"><b>FIGHT</b><span>See what your foes intend, choose your ground, and land the blow that turns it.</span></div>
+    <div class="bd"><b>CHASE</b><span>Run or pursue through a route of obstacles, shortcuts and close calls.</span></div>
+    <div class="bd"><b>INVESTIGATE</b><span>Gather clues, connect them and name the truth. Every answer has more than one way in.</span></div>
+    <div class="bd"><b>INFILTRATE</b><span>Slip past watchers, read the rooms and get out before the alarm.</span></div>
+    <div class="bd"><b>OUTWIT</b><span>Win an argument, a bargain or a bluff by finding what moves them.</span></div>
+    <div class="bd"><b>PERFORM</b><span>Win over a crowd, a court or a critic, beat by beat.</span></div>
+    <div class="bd"><b>SURVIVE</b><span>Weather the storm, the cold or the long road with what you carry.</span></div>
+    <div class="bd"><b>BUILD</b><span>Make something worth making: a shop, a ship, a cake for a queen.</span></div>
+    <div class="bd"><b>COMPETE</b><span>Race, duel or play for the title against rivals who learn.</span></div>
+  </div>
+  <p class="sub" style="margin-top:18px">These hands-on moments also give the phone time to cool between tellings, so long sessions stay smooth.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Everything a campaign needs</div>
+  <h2>A whole tabletop campaign on one phone.</h2>
+  <div class="grid">
+    <div class="card"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg><h3>A hero who changes</h3><p>Your hero's picture changes as they do: new armor and weapons, scars earned the hard way, the years passing, the shift from hero to rogue to villain. Tilt it and it moves with a little depth. A gallery keeps every look.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><h3>A map drawn for your world</h3><p>Parchment, sea chart, city plan, star chart or storybook, in the style of your world. Fog lifts as you explore. Tap a place to travel there, follow your quest's flag, and mark the land with your own notes. Ask it "take me to the mill".</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg><h3>Loot worth finding</h3><p>Gear that changes your rolls, from common to legendary, named in the world's own words. Your pack lives on your hero's page: compare, equip, use, give.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><path d="M4 5h16v15H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><h3>The Chronicle and Codex</h3><p>Your story as a journal, plus every person, place and strange word you've met, with what you know and where you learned it. Ask the Game Master a question any time without spending a turn.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 7v4a4 4 0 0 0 8 0V7"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg><h3>Hear it, speak it</h3><p>Every character speaks in a voice of their own. Speak your moves or type them, whichever you like.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg><h3>Your story, your limits</h3><p>Choose topics you never want to see, or want kept off-screen, and pick your storyteller: grim, wry, pulpy, cozy or lyrical. Want a passage told differently? Tell it again.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c.8-3.4 3.2-5 6-5s5.2 1.6 6 5M10 20c.8-3.4 3.2-5 6-5s5.2 1.6 6 5"/></svg><h3>Play together</h3><p>Friends on the same Wi-Fi or your hotspot join your campaign from their own phones, with no AI download of their own. Plan rounds together, and everyone rolls their own die.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M5 9h14M12 9v12M8 21l4-6 4 6"/></svg><h3>Made for every player</h3><p>Text up to twice the size, an easy-reading font, high contrast, reduced motion and screen-reader labels throughout. Every outcome is shown in words, never by color alone.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg><h3>Painted by your phone <span class="pro">PRO</span></h3><p>On phones with an AI chip, scenes, portraits, places, maps, item icons and your own themed d20 are painted on the device, checked against the scene they show, and labeled as AI-made.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">A world that keeps growing</div>
+  <h2>Play for hundreds of hours. Rise to level 30.</h2>
+  <p class="sub">The world grows as you explore it: past the edge of the map, new regions appear with their own people, factions and dangers. Roads take days, a world map shows how far you have come, and quests grow out of what you did and who you met. Every level brings a new talent, and the dangers rise to meet you.</p>
+  <div class="ladder">
+    <div class="rung"><span class="fill" style="opacity:.35"></span><div class="lv">1–4</div><div class="nm">Local</div><p>A town, a tavern, a first rival.</p></div>
+    <div class="rung"><span class="fill" style="opacity:.5"></span><div class="lv">5–10</div><div class="nm">Regional</div><p>New lands, factions, real enemies.</p></div>
+    <div class="rung"><span class="fill" style="opacity:.65"></span><div class="lv">11–16</div><div class="nm">Realm</div><p>Your name opens doors, and draws hunters.</p></div>
+    <div class="rung"><span class="fill" style="opacity:.8"></span><div class="lv">17–20</div><div class="nm">World</div><p>The fate of the world turns on you.</p></div>
+    <div class="rung"><span class="fill"></span><div class="lv">21–29</div><div class="nm">Legendary</div><p>Mythic powers. Songs about you.</p></div>
+    <div class="rung legend"><span class="fill"></span><div class="lv">30</div><div class="nm">The Finale</div><p>One last quest, built from your whole saga.</p></div>
+  </div>
+  <div class="legendband">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 50h40M16 50V30l8 6 8-14 8 14 8-6v20"/><circle cx="32" cy="14" r="3"/><circle cx="16" cy="26" r="2.5"/><circle cx="48" cy="26" r="2.5"/></svg>
+    <div>
+      <h3>Then become a Legend.</h3>
+      <p>Win the finale and your hero joins the Hall of Legends, with a monument on the map, an epilogue for every place and person you touched, and the whole saga as a storybook. Heroes who come after will hear your songs, and might find your blade.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Choose your road</div>
+  <h2>Hero, rogue or villain. <span class="pro">ROGUE &amp; VILLAIN: PRO</span></h2>
+  <p class="sub">Save the town, play both sides, or take it over, in your world's own words: in a space western you are a Lawbringer, a Drifter or an Outlaw King; in a kittens' bakery, a Beloved Baker, a Scrappy Upstart or a Ruthless Tycoon. Your deeds shift where you stand, and your hero's face shows it. Play the villain with your own scheme and lieutenants while a rising hero comes to stop you. If your hero falls, their grave stays on the map, people remember the name, and a new hero begins a story that has never been told before, in the same world. Or retire them with honor: they stay in the world as a mentor for your next hero, or as the rival your next villain must face.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Free and Pro</div>
+  <h2>The whole adventure is free. Pro makes it bigger and more beautiful.</h2>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Free</h3>
+      <p class="who">Everything you need for an epic, all the way to Legend.</p>
+      <ul>
+        <li>One world at a time, any theme you like</li>
+        <li>The whole game: every level to 30, the Finale and becoming a Legend</li>
+        <li>About 100 turns a day (menus, dice and questions never count)</li>
+        <li>Play with up to 2 friends at your table</li>
+        <li>A party of 3 heroes, counting you, your companions and friends</li>
+        <li>Character voices and speaking to the Game Master</li>
+        <li>The map, the Chronicle, the Codex and backups</li>
+        <li>Clean art drawn by the game, including a hero figure that changes with you and a d20 in your world's colors</li>
+      </ul>
+    </div>
+    <div class="tier prot">
+      <h3>Pro <span class="pro">ONE-TIME UNLOCK</span></h3>
+      <p class="who">Pay once. Keep it forever.</p>
+      <ul>
+        <li>As many worlds as you like, side by side</li>
+        <li>Unlimited turns</li>
+        <li>AI-painted scenes, portraits that age and scar with your hero, places, maps and item icons</li>
+        <li>A painted d20 in your campaign's own look</li>
+        <li>Your saga as an illustrated storybook</li>
+        <li>Share your worlds with friends</li>
+        <li>Start as a rogue or the villain, with your own scheme</li>
+        <li>Shape your world before it begins: its laws, its words, its names</li>
+        <li>Soundscapes chosen for every scene</li>
+        <li>A party of up to 6 heroes at your table</li>
+      </ul>
+    </div>
+  </div>
+  <div class="together">
+    <b>Playing with friends on Free.</b> Your table seats you and up to 2 friends. Friends never need Pro, and each friend adds turns for the table:
+    <table class="turns"><tbody>
+      <tr><td>You alone</td><td>100 turns a day</td></tr>
+      <tr><td>You and 1 friend</td><td>150 turns a day</td></tr>
+      <tr><td>You and 2 friends</td><td>200 turns a day</td></tr>
+    </tbody></table>
+  </div>
+  <p class="trialnote">Every new player gets the full Pro experience free for the first 7 days.</p>
+</section>
+
+<section>
+  <div class="eyebrow">The QuestHold promise</div>
+  <h2>Yours, on your phone.</h2>
+  <div class="promise">
+    <div class="pr"><b>Offline</b><span>After one download, it plays with no signal. On a plane, in a tent, underground.</span></div>
+    <div class="pr"><b>Private</b><span>No account. Your stories never leave your phone, except to the friends at your table.</span></div>
+    <div class="pr"><b>Pay once</b><span>Pro is a one-time unlock, never a subscription. No tokens, no meters, no waiting rooms.</span></div>
+    <div class="pr"><b>Made for players</b><span>No energy timers, no loot boxes, no pay-to-win. Just the story and the game.</span></div>
+  </div>
+</section>
+
+<footer>
+  <span class="mark">QuestHold AI</span>
+  <p>A first look at a game in development by Goodhope Technologies. Features shown are what we're building; some are still in progress. Android first, iPhone later.</p>
+</footer>
+
+</div>
+</body>
+</html>
