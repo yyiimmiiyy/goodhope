@@ -27,7 +27,7 @@
                     linear-gradient(180deg,#1A1424 0%, #14101C 100%);
         display:grid; grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr); gap:36px; align-items:center; padding:48px 44px; }
   .qh .kicker { font-family:"Alegreya Sans",system-ui,sans-serif; text-transform:uppercase; letter-spacing:.22em; font-size:12px; color:var(--ember); font-weight:700; }
-  .qh h1 { font-family:"Cinzel Decorative","Cinzel",Georgia,serif; font-size:clamp(34px,6vw,64px); line-height:1; margin:14px 0 0; white-space:nowrap;
+  .qh h1 { font-family:"Cinzel Decorative","Cinzel",Georgia,serif; font-size:clamp(26px,4.3vw,50px); line-height:1; margin:14px 0 0; white-space:nowrap;
            background:linear-gradient(180deg,#FFF3DA 0%,#E9C98A 70%,#C99252 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .qh .tag { font-family:Alegreya,Georgia,serif; font-style:italic; font-size:clamp(19px,2.4vw,25px); margin:14px 0 0; max-width:30ch; }
   .qh ul { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:10px; font-family:"Alegreya Sans",system-ui,sans-serif; font-size:16.5px; color:var(--qmuted); }
@@ -52,6 +52,7 @@
   }
   @media (max-width: 760px) {
     .qh { grid-template-columns:1fr; padding:32px 22px; gap:28px; }
+    .qh h1 { font-size:clamp(26px,8vw,40px); }
     .qh .dice { width:min(80%,260px); }
   }
 
