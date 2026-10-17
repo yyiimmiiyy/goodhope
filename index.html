@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Goodhope Technologies</title>
-<meta name="description" content="Goodhope Technologies makes QuestHold AI, a storytelling game with an AI Game Master on your phone, coming soon to Google Play and the App Store.">
+<meta name="description" content="Goodhope Technologies makes QuestHold AI, a storytelling game with an AI Game Master on your phone or tablet, coming soon to Google Play and the App Store.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
@@ -39,9 +39,20 @@
   .qh figure { margin:0; justify-self:center; max-width:300px; }
   .qh figure img { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:26px; box-shadow:0 30px 70px rgba(0,0,0,.5); }
   .qh figcaption { font-size:12.5px; color:#8C7C6E; font-style:italic; text-align:center; margin-top:10px; }
+  .qh .dice { position:relative; width:min(100%,320px); aspect-ratio:1; justify-self:center; }
+  .qh .dice img { position:absolute; height:auto; filter:drop-shadow(0 24px 36px rgba(0,0,0,.55)); }
+  .qh .dice .d1 { width:62%; left:19%; top:4%; }
+  .qh .dice .d2 { width:40%; left:0; top:52%; }
+  .qh .dice .d3 { width:40%; right:0; top:50%; }
+  @media (prefers-reduced-motion:no-preference) {
+    .qh .dice .d1 { animation:qhfloat 7s ease-in-out infinite; }
+    .qh .dice .d2 { animation:qhfloat 8s ease-in-out -2s infinite; }
+    .qh .dice .d3 { animation:qhfloat 9s ease-in-out -4s infinite; }
+    @keyframes qhfloat { 0%,100% { transform:translateY(0) rotate(-3deg); } 50% { transform:translateY(-10px) rotate(3deg); } }
+  }
   @media (max-width: 760px) {
     .qh { grid-template-columns:1fr; padding:32px 22px; gap:28px; }
-    .qh figure { max-width:260px; }
+    .qh .dice { width:min(80%,260px); }
   }
 
   .studio { padding: 44px 0 8px; }
@@ -70,23 +81,24 @@
     <div>
       <div class="kicker">Coming soon · Google Play and the App Store</div>
       <h1>QuestHold AI</h1>
-      <p class="tag">A storytelling game with an AI Game Master on your phone. Imagine any world. Play it for years.</p>
+      <p class="tag">A storytelling game with an AI Game Master on your phone or tablet. Imagine any world. Play them for years.</p>
       <ul>
         <li><b>Any world you can describe</b>, built from your own words, with its own people, places and dangers.</li>
         <li><b>You roll every die.</b> The AI tells the story; the game's rules and your dice decide what happens.</li>
         <li><b>Talk and listen</b>, or read and type. Every character speaks in a voice of their own.</li>
-        <li><b>Friends at your table</b>, from their own phones. Rise to level 30 and become a Legend.</li>
-        <li><b>On your phone, offline.</b> No account and no subscription.</li>
+        <li><b>Friends at your table</b>, from their own phones or tablets. Rise to level 30 and become a Legend.</li>
+        <li><b>On your own device, offline.</b> No account and no subscription.</li>
       </ul>
       <div class="cta">
         <a class="go" href="/questhold/">See QuestHold AI</a>
         <span class="soon">Coming soon</span>
       </div>
     </div>
-    <figure>
-      <img src="questhold/turn.png" width="720" height="1760" alt="A QuestHold AI screen: the Game Master's telling of a shot at a thug named Wilton, and a panel to roll your d20.">
-      <figcaption>A turn in the app, on an Android phone.</figcaption>
-    </figure>
+    <div class="dice" role="img" aria-label="Three of QuestHold's 3D d20s, rendered by the app">
+      <img class="d2" src="questhold/img/die_crystal.webp" width="410" height="410" alt="">
+      <img class="d3" src="questhold/img/die_lacquer.webp" width="410" height="410" alt="">
+      <img class="d1" src="questhold/img/die_brass.webp" width="410" height="410" alt="">
+    </div>
   </div>
 
   <div class="studio">
