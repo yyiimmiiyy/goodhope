@@ -4,110 +4,114 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Goodhope Technologies</title>
-<meta name="description" content="Goodhope Technologies is an independent software studio building private, on-device AI apps, mobile games, and developer tools.">
+<meta name="description" content="Goodhope Technologies makes QuestHold AI, a storytelling game with an AI Game Master on your phone, coming soon to Google Play and the App Store.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
 <style>
   :root { --bg:#f7f5f0; --panel:#efece4; --ink:#1c2321; --muted:#5d6763; --accent:#1f6f5c; --rule:#d9d5cb; }
   @media (prefers-color-scheme: dark) {
     :root { --bg:#131816; --panel:#1a211e; --ink:#eef0ec; --muted:#9aa5a0; --accent:#6fcfb4; --rule:#2a322f; }
   }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.6; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-  header { padding: 28px 0; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.6; overflow-x:hidden; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 24px 0; }
   .brand { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.1rem; letter-spacing: .01em; }
-  .hero { padding: 56px 24px 72px; }
-  .mark { width:44px; height:4px; background:var(--accent); margin-bottom:28px; }
-  h1 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size: clamp(2.1rem, 6.5vw, 3.6rem); line-height:1.08; letter-spacing:-.01em; margin:0 0 22px; text-wrap: balance; }
-  .lede { font-size:1.15rem; color:var(--muted); max-width: 36em; margin:0; }
-  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 28px; font-weight:600; }
-  section { padding: 56px 0; border-top:1px solid var(--rule); }
-  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-  .card { background:var(--panel); border-radius:10px; padding:24px; }
-  .card h3 { font-family: Georgia, "Iowan Old Style", serif; font-weight:400; font-size:1.3rem; margin:0 0 10px; line-height:1.25; }
-  .card p { margin:0; color:var(--muted); font-size:.98rem; }
-  .intro { color:var(--muted); max-width:40em; margin:-12px 0 26px; }
-  .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  @media (max-width: 620px) { .grid.two { grid-template-columns: 1fr; } }
-  a.tool { display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit; border:1px solid transparent; }
-  a.tool:hover, a.tool:focus-visible { border-color:var(--accent); outline:none; }
-  a.tool h3 { margin:0; }
-  a.tool .more { margin-top:auto; color:var(--accent); font-weight:600; font-size:.92rem; }
-  .principles { list-style:none; padding:0; margin:0; display:grid; gap:22px; max-width: 40em; }
+
+  /* QuestHold: always candlelit, whatever the visitor's theme */
+  .qh { --night:#14101C; --dusk:#1E1828; --line:#3D3249; --sand:#F1E3C8; --qmuted:#BFAE96; --rust:#E0784A; --ember:#F0A24E; --gold:#E3C26E;
+        color:var(--sand); border-radius:22px; overflow:hidden; position:relative;
+        background: radial-gradient(60% 70% at 85% 30%, rgba(224,120,74,.28), transparent 70%),
+                    radial-gradient(50% 60% at 10% 0%, rgba(143,183,232,.12), transparent 70%),
+                    linear-gradient(180deg,#1A1424 0%, #14101C 100%);
+        display:grid; grid-template-columns: minmax(0,1.2fr) minmax(0,.8fr); gap:36px; align-items:center; padding:48px 44px; }
+  .qh .kicker { font-family:"Alegreya Sans",system-ui,sans-serif; text-transform:uppercase; letter-spacing:.22em; font-size:12px; color:var(--ember); font-weight:700; }
+  .qh h1 { font-family:"Cinzel Decorative","Cinzel",Georgia,serif; font-size:clamp(34px,6vw,64px); line-height:1; margin:14px 0 0; white-space:nowrap;
+           background:linear-gradient(180deg,#FFF3DA 0%,#E9C98A 70%,#C99252 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .qh .tag { font-family:Alegreya,Georgia,serif; font-style:italic; font-size:clamp(19px,2.4vw,25px); margin:14px 0 0; max-width:30ch; }
+  .qh ul { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:10px; font-family:"Alegreya Sans",system-ui,sans-serif; font-size:16.5px; color:var(--qmuted); }
+  .qh li b { color:var(--gold); font-weight:700; }
+  .qh .cta { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:28px; }
+  .qh a.go { display:inline-flex; align-items:center; min-height:48px; padding:0 22px; border-radius:14px; background:var(--rust); color:#1d0f06; font-family:"Alegreya Sans",system-ui,sans-serif; font-weight:700; font-size:17px; text-decoration:none; }
+  .qh a.go:hover, .qh a.go:focus-visible { background:var(--ember); outline:none; }
+  .qh .soon { font-family:"Alegreya Sans",system-ui,sans-serif; font-size:14.5px; color:var(--qmuted); border:1px solid var(--line); border-radius:999px; padding:6px 14px; }
+  .qh figure { margin:0; justify-self:center; max-width:300px; }
+  .qh figure img { display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:26px; box-shadow:0 30px 70px rgba(0,0,0,.5); }
+  .qh figcaption { font-size:12.5px; color:#8C7C6E; font-style:italic; text-align:center; margin-top:10px; }
+  @media (max-width: 760px) {
+    .qh { grid-template-columns:1fr; padding:32px 22px; gap:28px; }
+    .qh figure { max-width:260px; }
+  }
+
+  .studio { padding: 44px 0 8px; }
+  .studio p { font-size:1.12rem; color:var(--muted); max-width: 38em; margin:0; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 20px; font-weight:600; }
+  section { padding: 44px 0; border-top:1px solid var(--rule); margin-top:36px; }
+  .tools { list-style:none; padding:0; margin:0; display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px 28px; }
+  @media (max-width: 620px) { .tools { grid-template-columns: 1fr; } }
+  .tools a { display:block; padding:10px 0; color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
+  .tools a:hover b, .tools a:focus-visible b { color:var(--accent); }
+  .tools b { font-weight:600; }
+  .tools span { color:var(--muted); font-size:.95rem; }
+  .intro { color:var(--muted); max-width:40em; margin:-8px 0 18px; font-size:.95rem; }
+  .principles { list-style:none; padding:0; margin:0; display:grid; gap:18px; max-width: 42em; }
   .principles strong { display:block; font-weight:600; }
   .principles span { color:var(--muted); }
-  footer { border-top:1px solid var(--rule); padding:24px 0 40px; font-size:.85rem; color:var(--muted); }
+  footer { border-top:1px solid var(--rule); padding:24px 0 40px; font-size:.85rem; color:var(--muted); margin-top:20px; }
   footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 </style>
 </head>
 <body>
 <header><div class="wrap"><div class="brand">Goodhope Technologies</div></div></header>
 
-<main>
-  <div class="wrap hero">
-    <div class="mark"></div>
-    <h1>Software that works where you are, and keeps you in control.</h1>
-    <p class="lede">We are an independent software studio. We build AI apps that run on the device in your hand, mobile games, and small, free tools powered by Claude.</p>
+<main class="wrap">
+  <div class="qh" role="region" aria-label="QuestHold AI">
+    <div>
+      <div class="kicker">Coming soon · Google Play and the App Store</div>
+      <h1>QuestHold AI</h1>
+      <p class="tag">A storytelling game with an AI Game Master on your phone. Imagine any world. Play it for years.</p>
+      <ul>
+        <li><b>Any world you can describe</b>, built from your own words, with its own people, places and dangers.</li>
+        <li><b>You roll every die.</b> The AI tells the story; the game's rules and your dice decide what happens.</li>
+        <li><b>Talk and listen</b>, or read and type. Every character speaks in a voice of their own.</li>
+        <li><b>Friends at your table</b>, from their own phones. Rise to level 30 and become a Legend.</li>
+        <li><b>On your phone, offline.</b> No account and no subscription.</li>
+      </ul>
+      <div class="cta">
+        <a class="go" href="/questhold/">See QuestHold AI</a>
+        <span class="soon">Coming soon</span>
+      </div>
+    </div>
+    <figure>
+      <img src="questhold/turn.png" width="720" height="1760" alt="A QuestHold AI screen: the Game Master's telling of a shot at a thug named Wilton, and a panel to roll your d20.">
+      <figcaption>A turn in the app, on an Android phone.</figcaption>
+    </figure>
+  </div>
+
+  <div class="studio">
+    <p>Goodhope Technologies is an independent software studio. We make games and apps whose AI runs on the device in your hand, so they stay private and keep working without a signal.</p>
   </div>
 
   <section>
-    <div class="wrap">
-      <h2>Tools powered by Claude</h2>
-      <p class="intro">Small, free, open-source tools for software teams and app makers. Each one runs on your own computer and uses Claude to do the thinking.</p>
-      <div class="grid two">
-        <a class="card tool" href="/hindsight/">
-          <h3>Hindsight</h3>
-          <p>Reviews pull requests and learns from your team's past mistakes, so the same bug is caught the next time.</p>
-          <span class="more">About Hindsight</span>
-        </a>
-        <a class="card tool" href="/blindspot/">
-          <h3>Blindspot</h3>
-          <p>Finds the risky code in a pull request that no test covers, and lists the test cases to write.</p>
-          <span class="more">About Blindspot</span>
-        </a>
-        <a class="card tool" href="/shipnotes/">
-          <h3>Shipnotes</h3>
-          <p>Writes release notes from the pull requests and commits that went into a release.</p>
-          <span class="more">About Shipnotes</span>
-        </a>
-        <a class="card tool" href="/earshot/">
-          <h3>Earshot</h3>
-          <p>Sorts app store reviews into themes and drafts a reply to each one for you to edit and post.</p>
-          <span class="more">About Earshot</span>
-        </a>
-      </div>
-    </div>
+    <h2>Also from Goodhope</h2>
+    <p class="intro">Small, free, open-source tools for software teams and app makers. Each runs on your own computer and uses Claude to do the thinking.</p>
+    <ul class="tools">
+      <li><a href="/hindsight/"><b>Hindsight</b> <span>· pull request reviews that learn from past mistakes</span></a></li>
+      <li><a href="/blindspot/"><b>Blindspot</b> <span>· the risky code no test covers</span></a></li>
+      <li><a href="/shipnotes/"><b>Shipnotes</b> <span>· release notes from your pull requests</span></a></li>
+      <li><a href="/earshot/"><b>Earshot</b> <span>· app store reviews sorted, replies drafted</span></a></li>
+    </ul>
   </section>
 
   <section>
-    <div class="wrap">
-      <h2>What else we work on</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>On-device AI companions</h3>
-          <p>Mobile apps that pair a local language model with real-world data, built for outdoor and hobby pursuits where a signal is not guaranteed.</p>
-        </div>
-        <div class="card">
-          <h3>Mobile games</h3>
-          <p>A portfolio of casual games across several genres, built on a shared engine so that each new title starts from proven foundations.</p>
-        </div>
-        <div class="card">
-          <h3>Applied machine learning</h3>
-          <p>Custom-trained image classifiers and retrieval pipelines that draw on public environmental and reference data to ground what our apps say.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <h2>How we build</h2>
-      <ul class="principles">
-        <li><strong>Private by default</strong><span>Our mobile apps run the model on your device, so your data stays there. Our Claude-powered tools have no server of ours: they send only what Claude needs straight to Anthropic, using your own key.</span></li>
-        <li><strong>Offline where it counts</strong><span>Our mobile apps are designed to keep working without a signal. Our Claude-powered tools need a connection to reach Claude.</span></li>
-        <li><strong>You stay in control</strong><span>Our tools draft and suggest. Nothing is posted or published until you choose to.</span></li>
-        <li><strong>Small team, shared foundations</strong><span>We invest in common engines and pipelines so a small studio can ship and maintain many products.</span></li>
-      </ul>
-    </div>
+    <h2>How we build</h2>
+    <ul class="principles">
+      <li><strong>Private by default</strong><span>Our games and apps run their AI on your device, so your stories and data stay there. Our Claude-powered tools have no server of ours: they send only what Claude needs straight to Anthropic, using your own key.</span></li>
+      <li><strong>Offline where it counts</strong><span>Our mobile games and apps keep working without a signal.</span></li>
+      <li><strong>You stay in control</strong><span>Nothing is posted, shared or published until you choose to.</span></li>
+      <li><strong>Made for players</strong><span>No energy timers, no loot boxes, no pay-to-win.</span></li>
+    </ul>
   </section>
 </main>
 
