@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Finderscope AI</title>
+<meta name="description" content="Finderscope AI is an astronomy guide that works with no signal: tonight planned for your sky, a live sky map, a deep-sky catalog, telescope tools, a true red night mode and Orin, an AI guide that runs on your phone. Coming soon to Google Play and the App Store from Goodhope Technologies.">
+<meta name="theme-color" content="#080512">
+<style>
+/* Finderscope's own identity (lib/theme/finderscope_theme.dart): the observatory at night. Near-black indigo,
+   starlight violet, pale sky blue, off-white text; light tracked headings; round, calm, no flashes. */
+:root{
+  color-scheme:dark;
+  --night:#080512; --surface:#120E22; --high:#1B1630; --bar:#0D0A20;
+  --violet:#B3A6FF; --sky:#9ED8FF; --text:#E8E4F4; --muted:#B0A9C8; --faint:#8F88A8;
+  --line:rgba(176,169,200,.2); --figure:#7C7CF0; --red:#FF5A4E;
+  --ui:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{background:var(--night);color:var(--text);overflow-x:clip}
+body{margin:0;font:17px/1.6 var(--ui);padding-inline:16px;padding-block:0 64px;overflow-x:hidden;overflow-wrap:break-word}
+img,svg{max-width:100%}
+a{color:var(--violet);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1100px;margin:0 auto}
+h1,h2,h3{margin:0;font-weight:300;letter-spacing:.02em;text-wrap:balance}
+p{margin:0}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:12px;background:var(--high);padding:8px 14px;border-radius:999px;z-index:2}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:300;letter-spacing:.08em;font-size:17px}
+.mark img{width:34px;height:34px;border-radius:9px}
+.top .by{color:var(--muted);font-size:14.5px;text-decoration:none}
+.top .by:hover{color:var(--violet)}
+
+/* hero */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:44px;align-items:center;padding-block:40px 64px}
+.hero::before{content:"";position:absolute;inset:-120px -50vw 0;z-index:-1;
+  background:radial-gradient(55% 60% at 75% 35%,rgba(124,124,240,.22),transparent 70%),
+             radial-gradient(45% 50% at 10% 10%,rgba(158,216,255,.10),transparent 70%),
+             linear-gradient(180deg,#0B0718 0%,var(--night) 100%)}
+.kicker{text-transform:uppercase;letter-spacing:.24em;font-size:12px;color:var(--sky);font-weight:600}
+h1{font-size:clamp(40px,7vw,78px);line-height:1;margin-top:16px;font-weight:200;letter-spacing:.03em;white-space:nowrap;
+  background:linear-gradient(180deg,#FFFFFF 0%,#D9D2FF 55%,#B3A6FF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-size:clamp(21px,2.6vw,27px);font-weight:300;color:var(--text);margin-top:16px;max-width:30ch}
+.lede{font-size:18px;color:var(--muted);margin-top:18px;max-width:52ch}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding:0;list-style:none}
+.badges li{border:1px solid var(--line);background:rgba(27,22,48,.75);border-radius:999px;padding:6px 13px;font-size:14px;color:var(--text)}
+.badges b{color:var(--violet);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none}
+.btn.main{background:var(--violet);color:#1A0F4A}
+.btn.main:hover,.btn.main:focus-visible{background:#C9C0FF}
+.btn.ghost{border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover,.btn.ghost:focus-visible{border-color:var(--violet);color:var(--violet)}
+.soon{font-size:14px;color:var(--muted)}
+
+.chart{margin:0;min-width:0}
+.chart .frame{border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 6px rgba(18,14,34,.6)}
+.chart img{display:block;width:100%;height:auto}
+.chart figcaption{font-size:13px;color:var(--faint);margin-top:12px;text-align:center;padding-inline:8px}
+@media (prefers-reduced-motion:no-preference){
+  .hero .frame{animation:drift 18s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+}
+
+/* sections */
+section{padding-block:64px;border-top:1px solid var(--line)}
+.eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--sky);font-weight:600}
+h2{font-size:clamp(28px,4.2vw,44px);line-height:1.12;margin-top:12px;color:var(--text)}
+.sub{font-size:18.5px;color:var(--muted);margin-top:16px;max-width:64ch}
+.sub b{color:var(--text);font-weight:600}
+.pro{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--violet);border:1px solid rgba(179,166,255,.7);border-radius:6px;padding:1px 6px;vertical-align:2px;margin-left:6px;white-space:nowrap}
+.live{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--sky);border:1px solid rgba(158,216,255,.55);border-radius:6px;padding:1px 6px;vertical-align:2px;margin-left:6px;white-space:nowrap}
+
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:34px}
+.pt{border-top:1px solid rgba(179,166,255,.55);padding-top:16px}
+.pt h3{font-size:19px;font-weight:500;color:var(--text);letter-spacing:.01em}
+.pt p{font-size:16px;color:var(--muted);margin-top:6px}
+
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:34px}
+.card{background:linear-gradient(180deg,var(--surface) 0%,#0E0A1C 100%);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:10px;align-content:start}
+.card svg{width:30px;height:30px;stroke:var(--violet);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:18.5px;font-weight:500;color:var(--text)}
+.card p{font-size:15.5px;color:var(--muted)}
+
+.band{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;margin-top:8px}
+.band.flip .chart{order:2}
+
+/* red mode */
+.redmode{background:#000;border-radius:28px;border:1px solid rgba(255,90,78,.25);padding:40px;margin-top:8px;
+  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px;align-items:center}
+.redmode .eyebrow{color:#FF7A6E}
+.redmode h2{color:#FFB3AB}
+.redmode .sub{color:#E59A92}
+.redmode .chart .frame{border-color:rgba(255,90,78,.25);box-shadow:none}
+.redmode .chart figcaption{color:#D98D85}
+.levels{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding:0;list-style:none}
+.levels li{border:1px solid rgba(255,90,78,.4);border-radius:999px;padding:5px 14px;font-size:14px;color:#FFB3AB}
+.levels li:nth-child(2){opacity:.88}.levels li:nth-child(3){opacity:.76}
+
+/* Orin */
+.orin{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:44px;align-items:start;margin-top:8px}
+.facts{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.facts li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-size:15.5px;color:var(--muted)}
+.facts b{display:block;color:var(--text);font-weight:600;font-size:16px;margin-bottom:2px}
+
+/* tiers */
+.tiers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:34px}
+.tier{border:1px solid var(--line);border-radius:22px;padding:26px;background:var(--surface)}
+.tier.p{border-color:rgba(179,166,255,.55);background:radial-gradient(90% 80% at 100% 0%,rgba(179,166,255,.16),transparent 70%),var(--surface)}
+.tier h3{font-size:24px;font-weight:400}
+.tier .price{font-size:15.5px;color:var(--muted);margin-top:6px}
+.tier .price b{color:var(--text);font-size:22px;font-weight:500}
+.tier ul{margin:16px 0 0;padding-left:18px;display:grid;gap:7px;font-size:16px;color:var(--text)}
+.tier li::marker{color:var(--sky)}
+.tier.p li::marker{color:var(--violet)}
+.note{margin-top:18px;font-size:15.5px;color:var(--muted);max-width:70ch}
+
+/* promise */
+.promise{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:30px}
+.pr{border-top:2px solid var(--violet);padding-top:14px}
+.pr b{display:block;font-size:18px;font-weight:500}
+.pr span{font-size:15.5px;color:var(--muted)}
+
+.safety{margin-top:30px;border:1px dashed rgba(255,190,130,.5);border-radius:18px;padding:16px 20px;font-size:15.5px;color:#F3D9BC}
+.safety b{color:#FFD9A8}
+
+footer{padding-block:40px 0;border-top:1px solid var(--line);display:grid;gap:14px}
+footer .fm{display:flex;align-items:center;gap:10px;font-weight:300;letter-spacing:.08em;font-size:19px}
+footer .fm img{width:30px;height:30px;border-radius:8px}
+footer p{font-size:14px;color:var(--faint);max-width:76ch}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px}
+footer nav a{color:var(--violet);text-decoration:none;padding-block:6px}
+footer nav a:hover{text-decoration:underline}
+
+@media (max-width:920px){
+  .hero{grid-template-columns:1fr;padding-block:24px 48px;gap:36px}
+  .band,.orin,.redmode{grid-template-columns:1fr}
+  .band.flip .chart{order:0}
+  .grid,.trio{grid-template-columns:1fr 1fr}
+  .promise{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .grid,.trio,.tiers,.promise{grid-template-columns:1fr}
+  .redmode{padding:24px 20px;border-radius:22px}
+  section{padding-block:48px}
+  .lede,.sub{font-size:17px}
+}
+@media (max-width:380px){h1{font-size:36px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+
+<div class="top">
+  <a class="mark" href="/finderscope/"><img src="img/icon.webp" width="192" height="192" alt="">Finderscope AI</a>
+  <a class="by" href="/">by Goodhope Technologies</a>
+</div>
+
+<main id="main">
+<header class="hero">
+  <div>
+    <div class="kicker">Coming soon · Google Play and the App Store</div>
+    <h1>Finderscope AI</h1>
+    <p class="tag">Your offline guide to the night sky.</p>
+    <p class="lede">Hold your phone up and see what is there. Know what is worth seeing tonight, and when the sky is truly dark. Ask Orin, an AI astronomy guide that runs on your phone. Work out what your telescope can show, and keep a log of every night. It all works at a dark site with no signal.</p>
+    <ul class="badges" aria-label="Highlights">
+      <li><b>Works</b> with no signal</li>
+      <li><b>No account</b>, no ads</li>
+      <li><b>True red</b> night mode</li>
+      <li><b>Orin</b>, AI on your phone</li>
+      <li><b>Pro</b> once, never a subscription</li>
+    </ul>
+    <div class="cta">
+      <a class="btn main" href="#tonight">See what it does</a>
+      <a class="btn ghost" href="#pro">Free and Pro</a>
+    </div>
+  </div>
+  <figure class="chart">
+    <div class="frame"><img src="img/sky_orion.svg" width="1200" height="900" alt="A star chart of Orion, Taurus, Gemini and Canis Major on a deep indigo sky: real stars sized by brightness and tinted by color, with Betelgeuse, Rigel, Aldebaran, Sirius, Procyon and Pollux named, the Orion Nebula (M42) circled in a finder's ring, and the Pleiades (M45) marked."></div>
+    <figcaption>Drawn from Finderscope's own star catalog: every dot is a real star at its catalog position, with the app's constellation figures.</figcaption>
+  </figure>
+</header>
+
+<section id="tonight">
+  <div class="eyebrow">Tonight, planned for you</div>
+  <h2>Know what is worth seeing before you step outside.</h2>
+  <p class="sub">Tonight lays out your night as a timeline: sunset, the twilights, full darkness and dawn, with the Moon's hours drawn across it, so the <b>moon-free dark hours</b> stand out at a glance. Then which planets are up and when, and the best deep-sky targets for your place right now. One tap hands it all to Orin: <b>Ask Orin to plan my night.</b></p>
+  <div class="trio">
+    <div class="pt"><h3>The dark hours, at a glance</h3><p>Astronomical darkness with the Moon taken out, worked out on your phone for your exact place and date.</p></div>
+    <div class="pt"><h3>Best for your telescope <span class="pro">PRO</span></h3><p>Tell Finderscope which telescope and eyepieces you use, and Tonight picks the targets they can actually show you.</p></div>
+    <div class="pt"><h3>Clouds, if you want them <span class="live">LIVE</span></h3><p>Turn on live sky data and tonight's clearest window joins the headline, from the US National Weather Service, or Environment Canada's global forecast elsewhere. Pro adds the coming nights.</p></div>
+  </div>
+  <p class="sub" style="font-size:16px;margin-top:26px">On Android, a home-screen widget keeps tonight in view: it counts down to dark and follows the Moon, with no network and without opening the app.</p>
+</section>
+
+<section id="sky">
+  <div class="eyebrow">The sky map</div>
+  <h2>Hold it up. The sky answers.</h2>
+  <p class="sub">Tap <b>Follow phone</b> and hold your phone to the sky: the stars, planets and constellation lines appear where you point. Drag to look around, pinch to zoom, tap anything to learn what it is. Every star sits at its catalog position for your place and moment, in its own true color.</p>
+  <div class="grid">
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg><h3>Over 31,000 stars, free</h3><p>The Bright Star Catalogue and the Henry Draper stars, with real colors and names. Pro adds the deep-star layer: about 10 million stars, far fainter than the eye can see.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg><h3>Find anything</h3><p>Type or say a name, like Jupiter, M42 or Orion. Each answer says whether it is up now and where to look, and opens the map aimed at it.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg><h3>Camera sky view</h3><p>Labels over the live camera for the bright stars, the planets, the Moon and the brighter deep-sky objects. It tells you that a phone's compass is often a few degrees off.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17 9 8l5 6 3-4 3 7"/><circle cx="4" cy="17" r="1.2"/><circle cx="9" cy="8" r="1.2"/><circle cx="14" cy="14" r="1.2"/><circle cx="17" cy="10" r="1.2"/><circle cx="20" cy="17" r="1.2"/></svg><h3>All 88 constellations</h3><p>Watch each figure trace itself star by star, and for many of them, the old stories quoted from classic books of star lore.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg><h3>Any place, any time</h3><p>Use your location, or pick from thousands of towns built into the app with no connection. The sky is worked out on the phone, never downloaded as pictures.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><h3>Read aloud</h3><p>Tonight, the Moon, the planets and most other screens read themselves aloud at a tap, so your eyes can stay on the sky, with star names said the way astronomers say them.</p></div>
+  </div>
+</section>
+
+<section id="orin">
+  <div class="eyebrow">Meet Orin</div>
+  <h2>An AI astronomy guide that answers at the dark site.</h2>
+  <div class="orin">
+    <div>
+      <p class="sub">Orin runs entirely on your phone after a one-time download of about 3 GB, so it answers with no signal, and your questions never leave the phone. Ask what is up, how to find it, what you are looking at, or what to try with your telescope. Orin works from your real place and sky, and from Finderscope's own catalogs.</p>
+      <p class="sub">Turn on <b>hands-free voice</b> and Orin reads every answer aloud, then listens for your next question, so your eyes can stay at the eyepiece.</p>
+    </div>
+    <ul class="facts">
+      <li><b>Honest about limits</b>Orin is AI, and AI can be wrong. Positions and times on Finderscope's screens come from the app's own math, never from the AI. Check anything you plan a trip around.</li>
+      <li><b>Sun-safe answers</b>Ask about the Sun and the answer carries the eye-safety warning.</li>
+      <li><b>Free to try</b>Every Pro feature for the first 30 days, then 20 questions a day free. Pro makes Orin unlimited.</li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="red-h">
+  <div class="redmode">
+    <div>
+      <div class="eyebrow">Keep your night vision</div>
+      <h2 id="red-h">A true red night mode.</h2>
+      <p class="sub">Night mode turns every pixel of every screen red on black, by its brightness, so nothing on the phone outshines the text and nothing spoils your dark adaptation. The eyepiece camera works red on black too.</p>
+      <ul class="levels" aria-label="Night mode brightness levels">
+        <li>Full</li><li>Dim</li><li>Darkest, below the phone's own minimum</li>
+      </ul>
+    </div>
+    <figure class="chart">
+      <div class="frame"><img src="img/sky_triangle_red.svg" width="1200" height="800" loading="lazy" alt="A star chart of the Summer Triangle in red on black: Deneb in Cygnus, Vega in Lyra and Altair in Aquila, with Albireo named, every star and line drawn in red."></div>
+      <figcaption>The Summer Triangle, drawn for this page from Finderscope's star catalog in the colors of its red night mode. Not a screenshot.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="eyebrow">At the eyepiece</div>
+  <h2>Made for the telescope in your yard.</h2>
+  <p class="sub">From binoculars to a big Dobsonian, Finderscope works out what your gear can show and helps you find it.</p>
+  <div class="grid">
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(-25 12 12)"/><circle cx="12" cy="12" r="1.6"/></svg><h3>The deep-sky catalog</h3><p>More than 850 galaxies, nebulae and clusters from the NGC and IC, each with a plain answer to "Can I see it, and with what?": eyes, binoculars, a small or a larger telescope, judged by how bright it is and how spread out its light is. The Messier objects are free; Pro opens the rest.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15 15 6l2.5 3.5L5.5 18z"/><path d="M15 6l2-1.5 2.5 3.5-2 1.5"/><path d="M9 16.5 7 21M10.5 15l3 6"/></svg><h3>Set up your telescope <span class="pro">PRO</span></h3><p>Enter the aperture and focal length of the telescope you use, and your eyepieces, and see each one's magnification, true field and limits as you type. Free: the telescope calculator and an eyepiece and Barlow simulator.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r=".9"/><circle cx="14.5" cy="8.5" r=".9"/><circle cx="13" cy="14.5" r=".9"/><path d="M9 10l5.5-1.5L13 14.5z"/></svg><h3>Eyepiece camera <span class="pro">PRO</span></h3><p>Hold the phone to the eyepiece: a focus aid, frame stacking, and star-field identification against Finderscope's star catalog, which says it found the field only when the match checks out.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg><h3>Your observing log</h3><p>Log what you saw, with what and how it looked, by typing or by voice, stored encrypted on your phone. Pro exports the log as a spreadsheet file.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/><circle cx="19" cy="18" r="1.3"/></svg><h3>Observing lists <span class="pro">PRO</span></h3><p>Herschel's objects, carbon stars, the named stars and their cultures, variable stars and double stars, ready for a night's tour.</p></div>
+  </div>
+</section>
+
+<section id="events">
+  <div class="eyebrow">Everything happening up there</div>
+  <h2>Every event in your sky, from where you stand.</h2>
+  <p class="sub">The Moon, planets, eclipses and meteor showers are worked out on your phone. Items marked <span class="live" style="margin-left:0">LIVE</span> come straight from the agency that publishes them, only when you turn on live sky data.</p>
+  <div class="grid">
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3.5a8.5 8.5 0 1 0 5.5 11A7 7 0 0 1 15 3.5z"/></svg><h3>The Moon</h3><p>Its phase, where it is in your sky, tonight's rise and set, the next four phases, and when it passes in front of bright stars and planets over the next 30 days.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><ellipse cx="12" cy="12" rx="10" ry="3"/></svg><h3>The planets</h3><p>Where every planet is and when it can be seen, from JPL's DE440 ephemeris, with Jupiter's four great moons as they line up right now.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 9 15M17 3l-6 6M21 8l-6 6"/><circle cx="7" cy="17" r="2.5"/></svg><h3>Meteor showers</h3><p>Twelve months of peaks, each with its rate, the radiant's height from your place, the Moon at peak and your best hours.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="12" r="6"/><circle cx="14" cy="12" r="6"/></svg><h3>Eclipses to 2050</h3><p>Solar and lunar, and whether you can see each one: the local circumstances are worked out on your phone from NASA's published eclipse elements.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c4-6 9-9 16-11"/><rect x="11" y="9" width="4" height="3" rx=".8" transform="rotate(-20 13 10.5)"/></svg><h3>Satellites and the ISS <span class="live">LIVE</span></h3><p>Naked-eye passes of the ISS, Hubble, Tiangong and the bright satellites over you, with orbits kept for offline use, and which part of a pass clears your real skyline.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18c3-3 4-9 9-9s6 6 9 9"/><path d="M6 14c2-2 3-5 6-5M18 14c-2-2-3-5-6-5"/></svg><h3>Aurora and space weather <span class="live">LIVE</span></h3><p>The Kp index from NOAA and whether aurora could reach your latitude tonight.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="17" cy="7" r="3"/><path d="M14.5 9 4 20M15.5 10.5 8 18M13 8 6 15"/></svg><h3>Comets, asteroids and fireballs <span class="live">LIVE</span></h3><p>Notable comets, close approaches and recent bright fireballs, from NASA JPL.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><h3>The Sun, launches and pictures <span class="live">LIVE</span></h3><p>Today's Sun from NASA's Solar Dynamics Observatory, upcoming rocket launches, NASA images and video, and the ESO and NOIRLab Picture of the Week.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><h3>Sky alerts</h3><p>A note for meteor-shower peaks, eclipses you can see and the Moon's phases, scheduled on your phone. Pro adds ISS passes, strong aurora and tonight's dark window.</p></div>
+  </div>
+</section>
+
+<section id="sites">
+  <div class="eyebrow">Your observing sites</div>
+  <h2>Find the dark. Know your horizon.</h2>
+  <div class="trio">
+    <div class="pt"><h3>Your true horizon <span class="pro">PRO</span></h3><p>The real skyline at your sites: hills, trees and buildings, from published lidar, tree-height and terrain data where it exists, plus what you trace with the camera. Rise and set times then use it.</p></div>
+    <div class="pt"><h3>The dark-sky map</h3><p>How bright the sky glows where you are, worked out on the phone, and with live sky data on, NASA's satellite map of the night lights. With Pro, scout the darkest, lowest-horizon spots near you.</p></div>
+    <div class="pt"><h3>The offline topo map <span class="pro">PRO</span></h3><p>USGS topographic maps, saved on your phone as you view them with live sky data on, so they work later with no signal, with sun times for wherever the map is centered.</p></div>
+  </div>
+</section>
+
+<section id="pro">
+  <div class="eyebrow">Free and Pro</div>
+  <h2>A real planetarium for free. Everything, once, with Pro.</h2>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Free</h3>
+      <p class="price">Free to download and free to keep.</p>
+      <ul>
+        <li>The sky map with over 31,000 stars, the 88 constellations and search</li>
+        <li>Tonight, the planets, the Moon, the Sun, eclipses and meteor showers</li>
+        <li>The Messier objects, with how to see each one</li>
+        <li>Satellite passes, launches, aurora, comets and NASA media, with live sky data on</li>
+        <li>True red night mode and hands-free voice</li>
+        <li>The telescope calculator and your observing log</li>
+        <li>Orin, with 20 questions a day</li>
+      </ul>
+    </div>
+    <div class="tier p">
+      <h3>Pro</h3>
+      <p class="price"><b>$19.99</b> once. Everything, for good. Never a subscription.</p>
+      <ul>
+        <li>Unlimited Orin</li>
+        <li>The full deep-sky catalog and about 10 million faint stars</li>
+        <li>Profiles for the telescope and eyepieces you use</li>
+        <li>The eyepiece camera</li>
+        <li>Observing lists</li>
+        <li>Your true horizon and dark-spot scouting</li>
+        <li>The multi-day cloud forecast and more sky alerts</li>
+        <li>The offline topo map and log export</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">Every Pro feature is on for your first 30 days, with no card and nothing to cancel. After that Finderscope keeps working in its free mode. Prices can differ by country; the store shows yours before you buy.</p>
+</section>
+
+<section id="private">
+  <div class="eyebrow">The Finderscope promise</div>
+  <h2>Yours, on your phone.</h2>
+  <div class="promise">
+    <div class="pr"><b>Works with no signal</b><span>The sky map, catalogs, Tonight and Orin run on the phone, so they work at a dark site.</span></div>
+    <div class="pr"><b>Private</b><span>No account, no ads, no tracking, no analytics. Your log is encrypted on your phone and never sent to us.</span></div>
+    <div class="pr"><b>Live data only if you ask</b><span>Live sky data is off until you turn it on, and then it comes straight from the public agencies, never through us.</span></div>
+    <div class="pr"><b>Pay once</b><span>Pro is a single purchase. No subscription, no tokens, no ads.</span></div>
+  </div>
+  <p class="safety"><b>Never look at the Sun</b> through a telescope, binoculars or a finder, or with your eyes alone, without a certified solar filter. Permanent eye damage can happen instantly.</p>
+</section>
+</main>
+
+<footer>
+  <div class="fm"><img src="img/icon.webp" width="192" height="192" alt="">Finderscope AI</div>
+  <p>A first look at an app in development by Goodhope Technologies LLC. Coming soon to Google Play and the App Store. The star charts on this page are drawn from the app's own bundled catalogs; app screenshots will come with the store listings.</p>
+  <nav aria-label="Finderscope">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>
+    <a href="/">Goodhope Technologies</a>
+  </nav>
+</footer>
+
+</div>
+</body>
+</html>

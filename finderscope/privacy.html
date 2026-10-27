@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Finderscope AI</title>
+  <meta name="description" content="Privacy Policy — Finderscope AI, from Goodhope Technologies LLC. The same text ships inside the app.">
+  <style>
+    :root { color-scheme: dark; --ink: #080512; --surface: #120E22; --text: #E8E4F4; --muted: #B0A9C8;
+            --accent: #B3A6FF; --sky: #9ED8FF; --rule: rgba(176, 169, 200, 0.22); }
+    @media (prefers-color-scheme: light) {
+      :root { color-scheme: light; --ink: #F7F6FB; --surface: #ECE9F6; --text: #1D1830; --muted: #4E4766;
+              --accent: #4B3DB0; --sky: #155E8C; --rule: rgba(75, 61, 176, 0.22); }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--ink); color: var(--text);
+           font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; overflow-wrap: anywhere; }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    a:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; border-radius: 3px; }
+    header { border-bottom: 1px solid var(--rule); background: var(--surface); }
+    header .bar { max-width: 760px; margin: 0 auto; padding: 14px 16px; display: flex; gap: 6px 20px;
+                  align-items: baseline; flex-wrap: wrap; }
+    header .brand { font-weight: 300; letter-spacing: 0.06em; color: var(--text); text-decoration: none;
+                    font-size: 1.15rem; }
+    header nav { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    header nav a { color: var(--muted); text-decoration: none; font-size: 15.5px; padding: 6px 0; }
+    header nav a:hover, header nav a[aria-current="page"] { color: var(--accent); }
+    main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+    h1, h2, h3 { line-height: 1.25; font-weight: 400; letter-spacing: 0.01em; }
+    h1 { font-size: 1.75em; margin: 0.6em 0 0.4em; color: var(--text); }
+    h2 { font-size: 1.22em; margin-top: 1.9em; color: var(--accent); border-bottom: 1px solid var(--rule);
+         padding-bottom: 4px; }
+    ul { padding-left: 1.2em; }
+    li { margin: 0.35em 0; }
+    li::marker { color: var(--sky); }
+    footer { color: var(--muted); font-size: 15px; border-top: 1px solid var(--rule); margin-top: 48px;
+             padding-top: 16px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <a class="brand" href="/finderscope/">Finderscope AI</a>
+      <nav aria-label="Legal">
+        <a href="/finderscope/privacy.html" aria-current="page">Privacy Policy</a>
+        <a href="/finderscope/terms.html">Terms of Service</a>
+        <a href="/">Goodhope Technologies</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+<h1>Privacy Policy</h1>
+<p>Last updated: October 26, 2026</p>
+<p>Provider: Goodhope Technologies LLC ("we", "us"), United States. Email: <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>. Our business address and phone number are shown on Finderscope's store listing.</p>
+<h2>In short</h2>
+<ul>
+<li>Finderscope has no accounts and no servers of our own. We never receive your location, your questions, your observing log, your photos or your voice.</li>
+<li>Orin, the AI astronomy guide, runs on your phone after a one-time download, and your conversations with it never leave the phone. Your observing log and observing sites are kept on your phone in an encrypted database.</li>
+<li>Live sky data is off until you turn it on. When it is on, Finderscope fetches public data straight from the agencies that publish it (section 3). The cloud forecast sends them a rounded location, and the horizon and dark-spot tools send the area around a place you choose. Nothing else Finderscope sends carries personal information.</li>
+<li>No ads. Finderscope itself has no analytics, no tracking and no crash reports. The store's purchase library inside the app (Google Play Billing on Android) keeps its own technical diagnostics with the store, under the store's privacy policy (section 11).</li>
+</ul>
+<h2>1. What stays on your phone</h2>
+<p>All of this is kept on your phone and is never sent to us:</p>
+<ul>
+<li>Your observing log (what you saw, when, with what, your notes, and where, when the place is known) and your observing sites. They are kept in an encrypted database (SQLCipher, AES-256) whose key is held in the phone's secure key store (Android Keystore, or the iOS Keychain).</li>
+<li>Your telescope and eyepieces, your saved place and the phone's last location, your settings, the elevation data downloaded for a site and the skyline worked out from it. They are kept in Finderscope's own private storage on the phone.</li>
+<li>The free-trial start date, the daily Orin question count and your Pro unlock, kept in the phone's secure storage.</li>
+<li>Your conversations with Orin, while you use them.</li>
+<li>A short mark for each answer you reported, so it stays hidden.</li>
+<li>The AI model files Finderscope downloaded, the live sky data it fetched (kept so it works with no signal), and the NASA clips you chose to save for offline viewing.</li>
+<li>What the home-screen widget shows (on Android): tonight's dark hours, the Moon and the best target for your place, so the widget can update itself with no network.</li>
+</ul>
+<p>Orin and the search model run on your phone. Your questions and Orin's answers are never sent anywhere. The star map, planet positions, rise and set times, satellite passes, eclipse and meteor-shower times, and all other sky math are worked out on your phone.</p>
+<h2>2. The AI model downloads</h2>
+<p>Nothing downloads until you agree. Orin's screen shows the size first, and if you are on mobile data it asks whether to wait for Wi-Fi or use mobile data. Then Finderscope fetches:</p>
+<ul>
+<li>Orin's model, Gemma 4 E2B by Google (about 3 GB): from Hugging Face, huggingface.co/unsloth/gemma-4-E2B-it-GGUF.</li>
+<li>On Android, the search model, EmbeddingGemma 2 by Google, which lets Finderscope find catalog objects and log entries by meaning: from Hugging Face, the files Google publishes as litert-community/embeddinggemma-2-text-vision-440m-litert-lm (about 388 MB, on phones with at least 4 GB of memory) or litert-community/embeddinggemma-2-text-270m-litert-lm (about 165 MB, on other phones). It downloads after you approve Orin's download, with the same Wi-Fi choice.</li>
+</ul>
+<p>Every file is checked against a fixed size and fingerprint (SHA-256) before it is used. While a download runs on Android, the phone shows a notification so the download can carry on when you leave the app.</p>
+<p>Like any download, these requests show Hugging Face and the content-delivery network it uses your IP address, the file being fetched and basic details of the app making the request. Finderscope sends no name, account or identifier with them. Hugging Face's privacy policy applies: <a href="https://huggingface.co/privacy">https://huggingface.co/privacy</a></p>
+<p>Models shared with our other apps (Android): if another Goodhope Technologies app on your phone already holds the same model file, Finderscope can use that copy instead of downloading it again, and it offers its own checked model files to those apps in the same way. Android lets only apps signed by us ask, and each file is checked by size and fingerprint first. Only model files are ever shared between the apps, never your log, your chats or anything you typed.</p>
+<h2>3. Live sky data (off until you turn it on)</h2>
+<p>Live sky data is off when you install Finderscope. You can turn it on in Settings, under Live sky data, or from the card on the Tonight screen, and turn it off again at any time. While it is off, none of the requests in this section are made (the model downloads in section 2 are separate).</p>
+<p>While it is on and you are online, each request goes directly from your phone to the service below, over an encrypted connection (HTTPS). Like any internet request, it shows that service your phone's IP address. None carries a name, an account or a device identifier. Each names the app (Finderscope AI) in its user agent, and most add our support address, so the service can contact us about its use. What comes back is kept on your phone so it works with no signal; you can clear it in Settings, under Storage.</p>
+<ul>
+<li>US National Weather Service (api.weather.gov): tonight's cloud forecast in the United States. It receives your place snapped to a 0.03 degree grid (about 3 km).</li>
+<li>Environment and Climate Change Canada, GeoMet (geo.weather.gc.ca): the cloud forecast outside the United States. It receives your place rounded to 0.05 degrees (about 5 km).</li>
+<li>CelesTrak (celestrak.org), with NASA's ISS trajectory file (nasa-public-data.s3.amazonaws.com) as a second source: satellite orbits. Sends nothing about you.</li>
+<li>NOAA Space Weather Prediction Center (services.swpc.noaa.gov): the aurora and Kp index. Sends nothing about you.</li>
+<li>NASA Solar Dynamics Observatory (sdo.gsfc.nasa.gov): today's pictures of the Sun. Sends nothing about you.</li>
+<li>NASA JPL (ssd-api.jpl.nasa.gov): comets, asteroids, close approaches and fireballs. Sends nothing about you.</li>
+<li>NASA Exoplanet Archive (exoplanetarchive.ipac.caltech.edu): stars with planets. Sends nothing about you.</li>
+<li>Launch Library 2 (ll.thespacedevs.com): upcoming rocket launches. Sends nothing about you.</li>
+<li>NASA Image and Video Library (images-api.nasa.gov, and NASA's servers for the pictures and videos it lists): object photos and NASA media. It receives the object's name, or the words you type into NASA media search.</li>
+<li>ESO (eso.org) and NOIRLab (noirlab.edu): the Picture of the Week, its page and its picture. Sends nothing about you.</li>
+<li>NASA GIBS (gibs.earthdata.nasa.gov): the night-lights map tiles for the area on screen in the dark-sky map.</li>
+<li>USGS National Map (basemap.nationalmap.gov): the topographic map tiles for the area on screen in the offline map.</li>
+</ul>
+<p>The map tiles show those two services the area you are looking at, like any online map.</p>
+<p>When Finderscope starts with live sky data on, it refreshes satellite orbits, the Kp forecast and comet and asteroid data in the background, so they are ready at a dark site. Sky alerts for ISS passes and aurora (section 7) use the same data.</p>
+<p>True horizon and dark-spot scouting, only when you ask: when you download elevation data for a saved observing site on the Horizon screen, or tap Scout on the dark-sky map, Finderscope downloads elevation, lidar and tree-height data for the area around that place (up to about 150 km away, for distant hills) straight from the public agencies that publish it. Some of these services are first asked which of their files cover the place, with the place's own position; the others receive the map area around it. Either way, they can tell where the site is. Depending on the country, these are: USGS 3DEP (elevation.nationalmap.gov), Meta and the World Resources Institute's global canopy height map (dataforgood-fb-data.s3.amazonaws.com), the Copernicus 30 m elevation model (copernicus-dem-30m.s3.amazonaws.com), the UK Environment Agency (environment.data.gov.uk), the Dutch AHN (service.pdok.nl), France's IGN (data.geopf.fr), Norway's Kartverket (wcs.geonorge.no), Spain's IGN (wcs-mds.idee.es and servicios.idee.es), Natural Resources Canada (datacube.services.geo.ca, and the file servers it points to) and swisstopo (data.geo.admin.ch). The requests carry no name, account or identifier. The skyline is then worked out and kept on your phone.</p>
+<h2>4. Location</h2>
+<p>Finderscope asks for your approximate location only (on Android, "approximate location"; on iPhone and iPad, while you use the app). It asks when you tap Use my location, or when you open a screen that needs your place, such as the camera sky view, the Moon, eclipses, meteor showers, satellite passes, aurora, occultations, the cloud forecast or the horizon. You can say no and choose a town from the list built into the app instead, with no connection.</p>
+<p>Your location is used on your phone to work out your sky. It leaves the phone only in the requests described in section 3, and only while live sky data is on. Finderscope never asks for precise location.</p>
+<h2>5. Camera and photos</h2>
+<p>The camera is used by the camera sky view (which also traces your skyline for the Horizon screen) and by the eyepiece camera. The phone asks for permission when you first open either one.</p>
+<ul>
+<li>Camera frames are processed on your phone only (labels, focus aid, stacking and star-field identification). They are never uploaded and are not kept.</li>
+<li>A picture is saved only when you tap Save. It goes to your phone's photos, in an album called "Finderscope" (the phone may ask for permission to add photos). From then on it is your photo; the app does not send it anywhere.</li>
+<li>When you tap Log on the eyepiece camera, the log entry keeps its text and a set of numbers made from the picture, so you can find the entry again by what it looked like. The picture itself is not kept in the log.</li>
+</ul>
+<h2>6. Microphone and voice</h2>
+<p>The microphone is used only when you speak to Finderscope (the microphone button, or hands-free voice). The phone asks for permission the first time. Finderscope does not record or keep audio.</p>
+<p>Your speech is turned into text by your phone's own speech recognizer. On many Android phones that recognizer is Google's, which may process the audio on Google's servers under Google's privacy policy. On iPhone and iPad it is Apple's speech recognition, which may send the audio to Apple under Apple's privacy policy. That is a service of your phone's operating system, not of Finderscope, and we never receive your audio. Answers are read aloud by your phone's own text-to-speech.</p>
+<h2>7. Sky alerts and notifications</h2>
+<p>Sky alerts are off until you turn them on in Settings. When you turn them on, the phone asks whether Finderscope may show notifications. The alerts (meteor-shower peaks, eclipses you can see from your place, Moon phases, and with Pro, ISS passes, strong aurora and the dark window tonight) are worked out and scheduled on your phone. There is no push service and nothing is sent to us. On Android, Finderscope uses on-time alarms where you allow them ("Alarms and reminders"), and slightly less exact ones otherwise, and it schedules them again after the phone restarts. ISS and aurora alerts need live sky data on.</p>
+<p>Finderscope also shows a notification while a model download is running (section 2).</p>
+<h2>8. Telescope mount (Wi-Fi)</h2>
+<p>If you connect a GoTo mount, Finderscope talks only to the address and port you type, on your own Wi-Fi network: it sends the mount pointing and stop commands and reads back where the mount points. These messages travel as plain, unencrypted commands on your local network, as the mounts' own command sets require. Nothing about the mount is sent to us. On iPhone and iPad, the phone asks before Finderscope may use the local network. Finderscope does not use Bluetooth.</p>
+<h2>9. Star Party (local network)</h2>
+<p>If you host or join a Star Party, the phones at the party talk to each other directly over the same Wi-Fi or a phone's hotspot, never over the internet and never through us.</p>
+<ul>
+<li>The host's phone runs a small station on the local network and shows its address and a session code. A guest's phone needs both to join; requests without the right code are refused.</li>
+<li>A guest's phone sends the name the guest types and the notes they share. The host's phone sends the target it has chosen and the notes shared at the party.</li>
+<li>These messages are not encrypted on the network. Anyone else on the same network could see them if they tried, so share the code only with people at the party, and use a network you trust.</li>
+<li>The station stops when you leave the Star Party screen or the app goes to the background.</li>
+</ul>
+<h2>10. Home-screen widget (Android)</h2>
+<p>If you add the Tonight widget to your home screen, Finderscope gives it the shape of the next two nights for your place (sunset, twilight, the Moon, the dark hours) and the best target, so the widget can update itself with no network and without opening the app. It stays on your phone.</p>
+<h2>11. Purchases</h2>
+<p>Finderscope is free to use, with every Pro feature on for the first 30 days. Pro is a one-time purchase through Google Play or Apple's App Store. The store handles the payment; we never see your card details, and we only receive what the store gives every developer about an order. On Android, Finderscope checks the purchase's signature on your phone against our Google Play key; on iPhone and iPad, Apple's StoreKit checks it. Nothing is sent to us. The trial and the daily question count are counted on your phone and are not sent to us.</p>
+<p>Google's billing library inside Finderscope talks to Google Play to do this, and may send Google its own technical diagnostics, under Google's privacy policy (<a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>). On iPhone and iPad, purchases go through Apple's StoreKit under Apple's privacy policy (<a href="https://www.apple.com/legal/privacy/">https://www.apple.com/legal/privacy/</a>).</p>
+<h2>12. Reporting an AI answer</h2>
+<p>If you report one of Orin's answers, the answer is hidden on your phone at once. Finderscope then offers to open your email app with a report addressed to <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>, filled in with the question, the answer, the reason you picked and the app version. Nothing is sent unless you press send in your email app. Section 15 explains what happens to an email you send us.</p>
+<h2>13. Links you open</h2>
+<p>Tapping a "Learn more" link, a source credit, or an object's page on SIMBAD, NED or NASA opens that website in your browser, under that website's own privacy policy.</p>
+<h2>14. Permissions</h2>
+<p>Android lists these permissions for Finderscope, some under other names:</p>
+<ul>
+<li>Internet: the model downloads, live sky data (only while it is on) and the telescope mount on your Wi-Fi.</li>
+<li>Approximate location: your sky (section 4). The phone asks first.</li>
+<li>Microphone: speaking to Finderscope (section 6). The phone asks first.</li>
+<li>Camera: the camera sky view and the eyepiece camera (section 5). The phone asks first.</li>
+<li>Notifications: sky alerts and download progress (sections 2 and 7). The phone asks first.</li>
+<li>Alarms and reminders, and starting after the phone restarts: on-time sky alerts that survive a restart (section 7).</li>
+<li>Foreground service and keeping the phone awake: so a model download keeps going when you leave the app (section 2).</li>
+<li>Google Play billing: buying Pro (section 11).</li>
+<li>Photos and storage, on Android 9 and older only: saving a picture to your photos (section 5).</li>
+<li>A permission of our own for sharing model files with our other apps (section 2).</li>
+</ul>
+<p>Finderscope does not ask for precise location, your contacts, Bluetooth, or your files. A log export (section 16) goes only where you pick in the phone's own save screen.</p>
+<h2>15. Emails you send us</h2>
+<p>This section applies only if you send us an email (a report or a question). It is the only personal information we ever receive.</p>
+<ul>
+<li>Who is responsible: Goodhope Technologies LLC, at the address and email at the top of this policy.</li>
+<li>What we receive: your email address, your name if your email app includes it, and what the email says.</li>
+<li>Why, and on what basis: to read your report or question, fix what went wrong in Finderscope, and answer you. Under the EU and UK GDPR our legal basis is our legitimate interest in keeping Finderscope accurate and working and in answering you (Article 6(1)(f)).</li>
+<li>Who else sees it: only the email service that delivers and stores our mail. We do not sell or share it with anyone else.</li>
+<li>Where: we are in the United States, so your email is received and stored there.</li>
+<li>How long: we delete a report email, and your address with it, within 12 months of the last message about it, or sooner if you ask.</li>
+<li>Your rights: you can ask us for a copy of what we hold about you, and ask us to correct it, delete it, limit how we use it or stop using it (object), and to give it to you in a portable form. Write to <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>. If you are in the EU or UK and think we have not handled your data properly, you have the right to complain to your data protection authority (in the UK, the Information Commissioner's Office).</li>
+<li>You do not have to send a report. Reporting inside the app hides the answer without any email.</li>
+</ul>
+<h2>16. Keeping and deleting your data</h2>
+<ul>
+<li>Everything Finderscope keeps is on your phone. You can delete log entries in the app, and clear downloaded models and cached live data in Settings, under Storage. Uninstalling Finderscope, or clearing its storage in the phone's settings, deletes everything it stored. We cannot recover it.</li>
+<li>On Android, Finderscope does not let Android back up its files to your Google account, so your log does not move to a new phone by itself. With Pro, you can export your observing log as a CSV file and save it wherever you choose. On iPhone and iPad, the device's own backup (to iCloud or a computer) may include Finderscope's files, as it does for other apps; the database inside stays encrypted.</li>
+<li>Photos you saved to your phone's photos stay there until you delete them.</li>
+<li>We hold no data about you unless you emailed us (section 15).</li>
+</ul>
+<h2>17. Children</h2>
+<p>Finderscope is for a general audience. It collects no personal information from anyone, of any age. If a child has emailed us, contact us and we will delete the email.</p>
+<h2>18. Your rights</h2>
+<p>We do not sell or share personal information, and we hold none about you unless you emailed us. You can ask us what we hold, and ask us to correct or delete it, at the email address above.</p>
+<h2>19. Changes to this policy</h2>
+<p>If Finderscope starts sending anything new, we update this policy and its date before that version is released. The current text always ships inside the app.</p>
+<h2>20. Contact</h2>
+<p>Questions about privacy: <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>, or write to Goodhope Technologies LLC at the address on Finderscope's store listing.</p>
+    <footer>
+      Finderscope AI by Goodhope Technologies LLC. This text also ships inside the app (Settings, Legal) and reads offline.<br>
+      Support: <a href="mailto:support@goodhopetechnologies.com">support@goodhopetechnologies.com</a>
+    </footer>
+  </main>
+</body>
+</html>
