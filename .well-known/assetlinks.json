@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.goodhopetechnologies.questhold_ai",
+      "sha256_cert_fingerprints": [
+        "44:F0:78:30:22:BC:D5:C0:8A:64:6E:1F:C1:E3:21:54:2F:84:03:6A:E8:DC:05:DE:7B:17:8C:EF:8C:63:61:B4",
+        "1D:6D:A3:1C:66:9C:ED:8B:FF:5C:96:D2:8E:0C:33:CC:F4:0C:8E:CD:F0:BE:AA:F1:B5:EC:6C:6D:5A:D3:D4:3A"
+      ]
+    }
+  }
+]

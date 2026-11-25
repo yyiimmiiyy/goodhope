@@ -1,0 +1,29 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "92CCW488PM.com.goodhopetechnologies.questholdAi"
+        ],
+        "components": [
+          {
+            "/": "/questhold/join",
+            "comment": "QuestHold AI: a table to join (details in the fragment, read by the app)"
+          },
+          {
+            "/": "/questhold/join/",
+            "comment": "QuestHold AI: a table to join, the form the app's QR and messages carry"
+          },
+          {
+            "/": "/questhold/world",
+            "comment": "QuestHold AI: a world sent by a friend"
+          },
+          {
+            "/": "/questhold/world/",
+            "comment": "QuestHold AI: a world sent by a friend, the form the app's QR and messages carry"
+          }
+        ]
+      }
+    ]
+  }
+}

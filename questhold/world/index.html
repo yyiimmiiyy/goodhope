@@ -1,0 +1,199 @@
+<!doctype html>
+<!--
+  W3C APP LINK (plan Decision 3, approved by Chris 2026-10-14): the "open in the app" page for a QuestHold table or world
+  link (lib/features/share/qr_link.dart). publish.sh copies it to questhold/join/index.html and questhold/world/index.html.
+
+  https://goodhopetechnologies.com/questhold/join/#a=192.168.1.23&c=2320&n=Jace
+
+  On a phone with QuestHold AI, Android opens the app on the link itself (the manifest's verified App Link and
+  /.well-known/assetlinks.json), and so does an iPhone (IOS JOIN: the Universal Link, the app's associated-domains
+  entitlement and /.well-known/apple-app-site-association), so this page shows only where the link is not verified, or
+  where QuestHold AI is not installed yet (or on a computer).
+  The table's details are in the fragment (after #): a browser never sends it to this site or any server; this page
+  reads it on the phone. Nothing here loads from anywhere else (no fonts, no scripts, no counters).
+  - "Open in QuestHold AI" hands the link to the app as questholdai://join?... (an Android intent link; the app checks
+    it: private network addresses only).
+  - "Get QuestHold AI on Google Play" opens the store with the link (without the name) as the install referrer, so
+    the app goes on into the table on its first start (lib/features/share/qr_links.dart).
+  - On an iPhone or an iPad (IOS JOIN, parity audit 2026-11-22), "Open in QuestHold AI" is the questholdai:// link
+    itself (Info.plist CFBundleURLTypes; ios/Runner/QuestHoldBridges.swift hands it to the same parsing and the same
+    join), and "Get QuestHold AI on the App Store" opens the App Store. The App Store carries nothing to the app, so
+    the page says to come back here once QuestHold AI is installed and tap Open in QuestHold AI. (No clipboard: an
+    iPhone asks the player before an app reads what another app copied, a question no stranger should meet first.)
+    A tap on a link to this same site stays in Safari (Universal Links open the app only from another site or app),
+    which is why the button is the questholdai:// form and not the https link.
+  - On a computer: the words say to open the link on the phone, and both stores are offered.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>QuestHold AI</title>
+<style>
+:root{
+  color-scheme:dark;
+  --ink:#120E0B; --surface:#1C1612; --high:#29211A; --line:#3B3128;
+  --parchment:#EFE4CC; --muted:#B4A68C; --gold:#D2AE5E; --ember:#E39540; --danger:#DB6A50;
+  --head:"Cinzel",Georgia,"Times New Roman",serif;
+  --body:"Alegreya",Georgia,serif;
+  --ui:system-ui,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--parchment)}
+body{font-family:var(--ui);font-size:17px;line-height:1.5;min-height:100vh;display:flex;justify-content:center;
+  padding:max(24px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom));
+  background:radial-gradient(120% 60% at 50% 0%,#3a2a16 0%,var(--ink) 62%)}
+main{width:100%;max-width:440px}
+.brand{font-family:var(--head);color:var(--gold);letter-spacing:.08em;font-size:15px;text-transform:uppercase;margin:0 0 28px}
+.eyebrow{font-family:var(--head);color:var(--ember);letter-spacing:.14em;text-transform:uppercase;font-size:13px;margin:0 0 6px}
+h1{font-family:var(--head);font-weight:700;font-size:30px;line-height:1.2;margin:0 0 12px;overflow-wrap:anywhere}
+p{margin:0 0 14px}
+.lead{font-family:var(--body);font-size:19px}
+.muted{color:var(--muted);font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin:22px 0}
+a.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;padding:12px 18px;
+  font-weight:700;font-size:17px;text-decoration:none;text-align:center;margin:0 0 12px}
+a.main{background:var(--gold);color:#1a130a}
+a.second{border:1.5px solid var(--gold);color:var(--gold)}
+a.btn:focus-visible{outline:3px solid var(--parchment);outline-offset:2px}
+ol{padding-left:22px;margin:0 0 6px}
+li{margin:0 0 8px}
+.bad{color:var(--danger)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">QuestHold AI</p>
+  <p class="eyebrow" id="eyebrow">A table to join</p>
+  <h1 id="title">Join a QuestHold AI table</h1>
+  <p class="lead" id="lead">A friend invited you to play.</p>
+
+  <div id="android">
+    <a class="btn main" id="open" href="#">Open in QuestHold AI</a>
+    <a class="btn second" id="store" href="#">Get QuestHold AI on Google Play</a>
+    <a class="btn second" id="appstore" href="#" hidden>Get QuestHold AI on the App Store</a>
+    <p class="muted" id="after">No QuestHold AI yet? Install it, then open it: it goes straight to the table.</p>
+  </div>
+  <div id="elsewhere" hidden>
+    <p id="phone">Open this link on your phone (Android or iPhone). QuestHold AI plays on the phone, at the table with your friends.</p>
+  </div>
+
+  <div class="card">
+    <ol id="steps">
+      <li id="s1">Both phones on the same Wi-Fi, or yours on your friend's hotspot.</li>
+      <li id="s2">Can't see the hotspot? On the host's phone, set the hotspot to 2.4 GHz and WPA2.</li>
+    </ol>
+  </div>
+  <p class="bad" id="broken" hidden>This link is not complete. Ask your friend to send it again.</p>
+  <p class="muted" id="privacy">The table's address stays in this link on your phone: this site never receives it. Google Play gets it only if you tap Get QuestHold AI, so the app can find the table after it installs.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var PKG = "com.goodhopetechnologies.questhold_ai";
+  var APP_STORE = "https://apps.apple.com/app/id6828906529"; // lib/features/settings/review_link.dart appleId
+  var es = /^es\b/i.test(navigator.language || "");
+  var kind = /\/world\/?/i.test(location.pathname) ? "world" : "join";
+  var T = {
+    en: {
+      join: {eyebrow: "A table to join", title: "Join a QuestHold AI table", named: "Join {n}'s table",
+        lead: "A friend invited you to play at their table.", after: "No QuestHold AI yet? Install it, then open it: it goes straight to the table.",
+        afterIos: "No QuestHold AI yet? Get it, then come back to this page and tap Open in QuestHold AI: it goes straight to the table."},
+      world: {eyebrow: "A world for you", title: "A world for QuestHold AI", named: "{n}",
+        lead: "A friend is sending you a world to play.", after: "No QuestHold AI yet? Install it, then open it: the world comes over while your friend's phone is sending it.",
+        afterIos: "No QuestHold AI yet? Get it, then come back to this page and tap Open in QuestHold AI: the world comes over while your friend's phone is sending it."},
+      open: "Open in QuestHold AI", store: "Get QuestHold AI on Google Play", appstore: "Get QuestHold AI on the App Store",
+      phone: "Open this link on your phone (Android or iPhone). QuestHold AI plays on the phone, at the table with your friends.",
+      s1: "Both phones on the same Wi-Fi, or yours on your friend's hotspot.",
+      s2: "Can't see the hotspot? On the host's phone, set the hotspot to 2.4 GHz and WPA2.",
+      broken: "This link is not complete. Ask your friend to send it again.",
+      privacy: "The table's address stays in this link on your phone: this site never receives it. Google Play gets it only if you tap Get QuestHold AI, so the app can find the table after it installs.",
+      privacyIos: "The table's address stays in this link on your phone: this site never receives it."
+    },
+    es: {
+      join: {eyebrow: "Una mesa para unirte", title: "Únete a una mesa de QuestHold AI", named: "Únete a la mesa de {n}",
+        lead: "Un amigo te invitó a jugar en su mesa.", after: "¿Aún no tienes QuestHold AI? Instálalo y ábrelo: te lleva directo a la mesa.",
+        afterIos: "¿Aún no tienes QuestHold AI? Instálalo, vuelve a esta página y toca Abrir en QuestHold AI: te lleva directo a la mesa."},
+      world: {eyebrow: "Un mundo para ti", title: "Un mundo para QuestHold AI", named: "{n}",
+        lead: "Un amigo te está enviando un mundo para jugar.", after: "¿Aún no tienes QuestHold AI? Instálalo y ábrelo: el mundo llega mientras el teléfono de tu amigo lo envía.",
+        afterIos: "¿Aún no tienes QuestHold AI? Instálalo, vuelve a esta página y toca Abrir en QuestHold AI: el mundo llega mientras el teléfono de tu amigo lo envía."},
+      open: "Abrir en QuestHold AI", store: "Obtener QuestHold AI en Google Play", appstore: "Obtener QuestHold AI en el App Store",
+      phone: "Abre este enlace en tu teléfono (Android o iPhone). QuestHold AI se juega en el teléfono, en la mesa con tus amigos.",
+      s1: "Los dos teléfonos en el mismo Wi-Fi, o el tuyo en el punto de acceso de tu amigo.",
+      s2: "¿No ves el punto de acceso? En el teléfono del anfitrión, ponlo en 2.4 GHz y WPA2.",
+      broken: "Este enlace no está completo. Pídele a tu amigo que lo envíe de nuevo.",
+      privacy: "La dirección de la mesa se queda en este enlace en tu teléfono: este sitio nunca la recibe. Google Play la recibe solo si tocas Obtener QuestHold AI, para que la app encuentre la mesa al instalarse.",
+      privacyIos: "La dirección de la mesa se queda en este enlace en tu teléfono: este sitio nunca la recibe."
+    }
+  };
+  var t = es ? T.es : T.en, k = t[kind];
+  if (es) document.documentElement.lang = "es";
+  function set(id, text) { var e = document.getElementById(id); if (e) e.textContent = text; }
+
+  // The details, read here on the phone from the fragment (never sent anywhere by the browser).
+  var q = new URLSearchParams(location.hash.replace(/^#/, ""));
+  var a = (q.get("a") || "").split(",").filter(function (h) {
+    return /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)\d{1,3}\.\d{1,3}(\.\d{1,3})?$/.test(h.trim());
+  });
+  var c = q.get("c") || "", p = q.get("p") || "", n = (q.get("n") || "").slice(0, 24);
+  var ok = a.length > 0 && /^\d{4}$/.test(c) && (p === "" || /^\d{1,5}$/.test(p));
+
+  set("eyebrow", k.eyebrow);
+  set("title", n ? k.named.replace("{n}", n) : k.title);
+  set("lead", k.lead);
+  set("after", k.after);
+  set("open", t.open);
+  set("store", t.store);
+  set("appstore", t.appstore);
+  set("phone", t.phone);
+  set("s1", t.s1);
+  set("s2", t.s2);
+  set("broken", t.broken);
+  set("privacy", t.privacy);
+  document.title = (n ? k.named.replace("{n}", n) : k.title);
+
+  var details = new URLSearchParams();
+  details.set("a", a.join(","));
+  if (p) details.set("p", p);
+  details.set("c", c);
+  var bare = location.origin + location.pathname + "#" + details.toString();
+  if (n) details.set("n", n);
+  var store = "https://play.google.com/store/apps/details?id=" + PKG +
+      (ok ? "&referrer=" + encodeURIComponent("link=" + encodeURIComponent(bare)) : "");
+  var intent = "intent://" + kind + "?" + details.toString() + "#Intent;scheme=questholdai;package=" + PKG +
+      ";S.browser_fallback_url=" + encodeURIComponent(store) + ";end";
+
+  // The same questholdai:// form QrInvite.appLink makes (lib/features/share/qr_link.dart), read by QrInvite.parse.
+  var app = "questholdai://" + kind + "?" + details.toString();
+
+  var ua = navigator.userAgent || "";
+  var android = /Android/i.test(ua);
+  // An iPad's Safari presents itself as a Mac by default; a Mac has no touch screen.
+  var ios = !android && (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1));
+  function el(id) { return document.getElementById(id); }
+  el("store").href = store;
+  el("appstore").href = APP_STORE;
+  if (!ok) {
+    el("broken").hidden = false;
+    el("open").hidden = true;
+    el("after").hidden = true; // it speaks of a button and a table a broken link does not have
+  } else {
+    el("open").href = android ? intent : ios ? app : store;
+  }
+  if (ios) {
+    el("store").hidden = true;
+    el("appstore").hidden = false;
+    set("after", k.afterIos);
+    set("privacy", t.privacyIos);
+  } else if (!android) {
+    el("elsewhere").hidden = false;
+    el("open").hidden = true;
+    el("appstore").hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
